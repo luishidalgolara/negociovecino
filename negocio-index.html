@@ -1,0 +1,1915 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negocio Vecino</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Estilos para el botón de ir atrás */
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--bg-secondary, #f8f9fa);
+            border: 2px solid var(--border-color, #e9ecef);
+            border-radius: 12px;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: var(--text-secondary, #7f8c8d);
+            z-index: 10;
+        }
+
+        .back-button:hover {
+            background: var(--primary-color, #e67e22);
+            color: white;
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 4px 12px rgba(230, 126, 34, 0.3);
+        }
+
+        .back-button i {
+            font-size: 18px;
+        }
+
+        /* Ajustar el header para dar espacio al botón */
+        .main-header .container {
+            position: relative;
+            padding-left: 80px;
+        }
+
+        /* NUEVOS ESTILOS PARA PESTAÑAS DE NEGOCIO */
+        .business-navigation {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: var(--spacing-xl);
+            padding: 0 var(--spacing-lg);
+        }
+
+        .business-tabs {
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+        }
+
+        .business-tab {
+            padding: var(--spacing-lg) var(--spacing-xl);
+            border: none;
+            background: none;
+            color: var(--text-secondary);
+            font-family: var(--font-primary);
+            font-size: 1rem;
+            font-weight: var(--font-weight-medium);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            border-bottom: 3px solid transparent;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            position: relative;
+        }
+
+        .business-tab:hover {
+            color: var(--primary-color);
+            background: rgba(230, 126, 34, 0.05);
+        }
+
+        .business-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+            background: rgba(230, 126, 34, 0.1);
+        }
+
+        .business-tab i {
+            font-size: 1.1rem;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        /* Estilos específicos para la pestaña de productos */
+        .products-tab-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-xl);
+            padding: var(--spacing-xl);
+            background: var(--bg-card);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .products-tab-title {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .products-tab-title h2 {
+            font-size: 1.75rem;
+            font-weight: var(--font-weight-semibold);
+            color: var(--text-primary);
+            margin: 0;
+        }
+
+        .products-tab-title .tab-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-primary);
+            border-radius: var(--border-radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .products-stats {
+            display: flex;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+
+        .products-stat {
+            text-align: center;
+            padding: var(--spacing-md);
+            background: var(--bg-secondary);
+            border-radius: var(--border-radius-md);
+            min-width: 80px;
+        }
+
+        .products-stat-number {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: var(--font-weight-bold);
+            color: var(--primary-color);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .products-stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* ===== ESTILOS PARA EL NUEVO SISTEMA DE SLIDER ===== */
+        
+        /* Contenedor principal del slider */
+        .cantidad-slider-container {
+            background: var(--bg-secondary, #f8f9fa);
+            border-radius: var(--border-radius-md, 12px);
+            padding: var(--spacing-md, 16px);
+            margin: var(--spacing-md, 16px) 0;
+            border: 1px solid var(--border-color, #e9ecef);
+            transition: all 0.3s ease;
+        }
+
+        .cantidad-slider-container:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-color: var(--primary-color, #e67e22);
+        }
+
+        /* Header del slider */
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm, 12px);
+        }
+
+        .slider-label {
+            font-size: 0.875rem;
+            font-weight: var(--font-weight-medium, 500);
+            color: var(--text-secondary, #6c757d);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs, 8px);
+        }
+
+        .slider-label i {
+            color: var(--primary-color, #e67e22);
+        }
+
+        .cantidad-display {
+            font-size: 1rem;
+            font-weight: var(--font-weight-semibold, 600);
+            color: var(--primary-color, #e67e22);
+            background: white;
+            padding: 4px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color, #e9ecef);
+            transition: all 0.2s ease;
+        }
+
+        /* Slider principal */
+        .cantidad-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--border-color, #e9ecef);
+            outline: none;
+            opacity: 0.8;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            -webkit-appearance: none;
+            margin: 10px 0;
+        }
+
+        .cantidad-slider:hover {
+            opacity: 1;
+            background: #d1d5db;
+        }
+
+        .cantidad-slider:focus {
+            opacity: 1;
+            box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2);
+        }
+
+        /* Estilos del thumb para WebKit */
+        .cantidad-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary-color, #e67e22);
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+            border: 3px solid white;
+        }
+
+        .cantidad-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(230, 126, 34, 0.4);
+        }
+
+        .cantidad-slider::-webkit-slider-thumb:active {
+            transform: scale(1.15);
+        }
+
+        /* Estilos del thumb para Firefox */
+        .cantidad-slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary-color, #e67e22);
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+        }
+
+        .cantidad-slider::-moz-range-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        /* Track para Firefox */
+        .cantidad-slider::-moz-range-track {
+            height: 8px;
+            border-radius: 4px;
+            background: var(--border-color, #e9ecef);
+        }
+
+        /* Información de precio dinámico */
+        .precio-dinamico {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: var(--spacing-sm, 12px);
+            padding-top: var(--spacing-sm, 12px);
+            border-top: 1px solid var(--border-color, #e9ecef);
+        }
+
+        .precio-total {
+            font-size: 1.25rem;
+            font-weight: var(--font-weight-bold, 700);
+            color: var(--success-color, #28a745);
+            transition: all 0.2s ease;
+        }
+
+        .precio-unidad {
+            font-size: 0.875rem;
+            color: var(--text-secondary, #6c757d);
+            text-align: right;
+        }
+
+        /* Información de stock */
+        .stock-info {
+            font-size: 0.75rem;
+            margin-top: var(--spacing-xs, 8px);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs, 8px);
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .stock-info.sin-stock {
+            color: var(--error-color, #dc3545);
+            background: rgba(220, 53, 69, 0.1);
+        }
+
+        .stock-info.stock-warning {
+            color: var(--warning-color, #ffc107);
+            background: rgba(255, 193, 7, 0.1);
+        }
+
+        .stock-info.stock-low {
+            color: var(--primary-color, #e67e22);
+            background: rgba(230, 126, 34, 0.1);
+        }
+
+        .stock-info.stock-ok {
+            color: var(--success-color, #28a745);
+            background: rgba(40, 167, 69, 0.1);
+        }
+
+        /* Botones de ajuste rápido */
+        .slider-actions {
+            display: flex;
+            gap: var(--spacing-sm, 12px);
+            margin-top: var(--spacing-md, 16px);
+        }
+
+        .btn-quick-adjust {
+            background: var(--bg-card, white);
+            border: 1px solid var(--border-color, #e9ecef);
+            border-radius: var(--border-radius-sm, 6px);
+            padding: var(--spacing-xs, 8px) var(--spacing-sm, 12px);
+            font-size: 0.75rem;
+            font-weight: var(--font-weight-medium, 500);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-secondary, #6c757d);
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-quick-adjust:hover {
+            background: var(--primary-color, #e67e22);
+            color: white;
+            border-color: var(--primary-color, #e67e22);
+            transform: translateY(-1px);
+        }
+
+        .btn-quick-adjust:active {
+            transform: translateY(0);
+        }
+
+        /* Botón principal de agregar al carrito */
+        .btn-add-cart-slider {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary-color, #e67e22) 0%, #d35400 100%);
+            border: none;
+            border-radius: var(--border-radius-md, 12px);
+            padding: var(--spacing-md, 16px);
+            color: white;
+            font-weight: var(--font-weight-medium, 500);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            margin-top: var(--spacing-md, 16px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm, 12px);
+        }
+
+        .btn-add-cart-slider:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(230, 126, 34, 0.4);
+        }
+
+        .btn-add-cart-slider:active:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        .btn-add-cart-slider:disabled {
+            background: var(--border-color, #e9ecef);
+            cursor: not-allowed;
+            opacity: 0.6;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-add-cart-slider .btn-ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        /* Animaciones para cambios de precio */
+        .precio-total.updating {
+            transform: scale(1.05);
+            color: var(--primary-color, #e67e22);
+        }
+
+        .cantidad-display.updating {
+            transform: scale(1.05);
+            background: var(--primary-color, #e67e22);
+            color: white;
+        }
+
+        /* Responsive para el sistema de slider */
+        @media (max-width: 768px) {
+            .main-header .container {
+                padding-left: 70px;
+            }
+            
+            .back-button {
+                left: 15px;
+                width: 40px;
+                height: 40px;
+            }
+            
+            .back-button i {
+                font-size: 16px;
+            }
+            
+            .logo-text {
+                display: none;
+            }
+
+            .business-tabs {
+                gap: 0;
+            }
+
+            .business-tab {
+                padding: var(--spacing-md) var(--spacing-lg);
+                font-size: 0.875rem;
+            }
+
+            .business-tab span {
+                display: none;
+            }
+
+            .products-tab-header {
+                flex-direction: column;
+                gap: var(--spacing-lg);
+                text-align: center;
+            }
+
+            .products-stats {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+
+            /* Slider responsive */
+            .cantidad-slider-container {
+                padding: var(--spacing-sm, 12px);
+            }
+            
+            .slider-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--spacing-xs, 8px);
+            }
+            
+            .precio-dinamico {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--spacing-xs, 8px);
+            }
+
+            .slider-actions {
+                flex-direction: column;
+                gap: var(--spacing-xs, 8px);
+            }
+
+            .btn-quick-adjust {
+                flex: none;
+            }
+
+            .cantidad-slider::-webkit-slider-thumb {
+                width: 28px;
+                height: 28px;
+            }
+
+            .cantidad-slider::-moz-range-thumb {
+                width: 28px;
+                height: 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header .container {
+                padding-left: 60px;
+            }
+            
+            .back-button {
+                left: 10px;
+                width: 36px;
+                height: 36px;
+            }
+            
+            .back-button i {
+                font-size: 14px;
+            }
+
+            .cantidad-slider-container {
+                margin: var(--spacing-sm, 12px) 0;
+                padding: var(--spacing-sm, 12px);
+            }
+
+            .precio-total {
+                font-size: 1.1rem;
+            }
+
+            .precio-unidad {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Animación mejorada para cambio de pestañas */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Estilos adicionales para mejorar la experiencia del slider */
+        .producto-card:hover .cantidad-slider-container {
+            border-color: var(--primary-color, #e67e22);
+            box-shadow: 0 2px 8px rgba(230, 126, 34, 0.15);
+        }
+
+        .producto-card.destacado .cantidad-slider-container {
+            background: linear-gradient(135deg, rgba(230, 126, 34, 0.05) 0%, rgba(211, 84, 0, 0.05) 100%);
+        }
+
+        /* Indicador visual para productos sin stock */
+        .producto-card .cantidad-slider-container.sin-stock {
+            opacity: 0.6;
+            background: #f8f9fa;
+        }
+
+        .producto-card .cantidad-slider-container.sin-stock .cantidad-slider {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .producto-card .cantidad-slider-container.sin-stock .cantidad-slider::-webkit-slider-thumb {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        .producto-card .cantidad-slider-container.sin-stock .cantidad-slider::-moz-range-thumb {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+
+        /* Efecto de carga para el slider */
+        .cantidad-slider-container.loading {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cantidad-slider-container.loading::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: loading-slide 1.5s infinite;
+        }
+
+        @keyframes loading-slide {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Estilos para el admin con el nuevo sistema */
+        .producto-admin-card .producto-pricing {
+            background: var(--bg-secondary, #f8f9fa);
+            padding: var(--spacing-md, 16px);
+            border-radius: var(--border-radius-md, 12px);
+            margin: var(--spacing-md, 16px) 0;
+            border: 1px solid var(--border-color, #e9ecef);
+        }
+
+        .producto-admin-card .precio-info,
+        .producto-admin-card .cantidad-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-sm, 12px);
+        }
+
+        .producto-admin-card .precio-info:last-child,
+        .producto-admin-card .cantidad-info:last-child {
+            margin-bottom: 0;
+        }
+
+        .producto-admin-card .precio-label,
+        .producto-admin-card .cantidad-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary, #6c757d);
+            font-weight: var(--font-weight-medium, 500);
+        }
+
+        .producto-admin-card .precio-value,
+        .producto-admin-card .cantidad-value {
+            font-size: 0.875rem;
+            color: var(--text-primary, #212529);
+            font-weight: var(--font-weight-semibold, 600);
+        }
+
+        .producto-admin-card .stock-info.good-stock {
+            color: var(--success-color, #28a745);
+        }
+
+        .producto-admin-card .stock-info.medium-stock {
+            color: var(--warning-color, #ffc107);
+        }
+
+        .producto-admin-card .stock-info.low-stock {
+            color: var(--error-color, #dc3545);
+        }
+
+        /* Mejoras visuales para el sistema completo */
+        .cantidad-slider:focus + .precio-dinamico .precio-total {
+            color: var(--primary-color, #e67e22);
+            transform: scale(1.02);
+        }
+
+        .slider-header:hover .cantidad-display {
+            transform: scale(1.02);
+        }
+
+        /* Estados especiales del slider */
+        .cantidad-slider-container.destacado {
+            border: 2px solid var(--primary-color, #e67e22);
+            background: linear-gradient(135deg, rgba(230, 126, 34, 0.05) 0%, rgba(255, 255, 255, 1) 100%);
+        }
+
+        .cantidad-slider-container.destacado .cantidad-slider::-webkit-slider-thumb {
+            background: linear-gradient(135deg, var(--primary-color, #e67e22) 0%, #d35400 100%);
+            box-shadow: 0 3px 8px rgba(230, 126, 34, 0.3);
+        }
+
+        /* Tooltip para información adicional */
+        .slider-tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+
+        .slider-tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 0.75rem;
+            position: absolute;
+            z-index: 1000;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .slider-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Principal -->
+    <header class="main-header">
+        <div class="container">
+            <!-- Botón de ir atrás -->
+            <button id="backButton" class="back-button" title="Ir atrás">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            
+            <h1 class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-store"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-main">Negocio Vecino</span>
+                    <span class="logo-sub">Tu tienda de barrio digital</span>
+                </div>
+            </h1>
+            <div class="header-controls">
+                <button id="themeToggle" class="theme-toggle" title="Cambiar tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <nav class="main-nav">
+                    <button id="clienteBtn" class="nav-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Cliente</span>
+                        <div class="nav-indicator"></div>
+                    </button>
+                    <button id="negocioBtn" class="nav-btn active">
+                        <i class="fas fa-cog"></i>
+                        <span>Negocio</span>
+                        <div class="nav-indicator"></div>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- INTERFAZ DEL CLIENTE -->
+    <main id="clienteInterface" class="interface">
+        <div class="container">
+            <!-- Bienvenida -->
+            <section class="welcome-section">
+                <div class="welcome-content">
+                    <div class="welcome-text">
+                        <h2>¡Bienvenido a tu negocio de barrio!</h2>
+                        <p>Selecciona tus productos favoritos y arma tu pedido con cantidades flexibles</p>
+                    </div>
+                    <div class="welcome-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-box"></i>
+                            <span id="totalProductosCliente">0</span>
+                            <small>Productos</small>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-heart"></i>
+                            <span id="totalFavoritos">0</span>
+                            <small>Favoritos</small>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Controles de Búsqueda y Filtros -->
+            <section class="search-controls">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar productos...">
+                    <button id="clearSearch" class="clear-search" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="filter-controls">
+                    <div class="category-filters">
+                        <button class="category-btn active" data-category="all">
+                            <i class="fas fa-th"></i>
+                            Todos
+                        </button>
+                        <button class="category-btn" data-category="panaderia">
+                            <i class="fas fa-bread-slice"></i>
+                            Panadería
+                        </button>
+                        <button class="category-btn" data-category="lacteos">
+                            <i class="fas fa-cheese"></i>
+                            Lácteos
+                        </button>
+                        <button class="category-btn" data-category="verduras">
+                            <i class="fas fa-carrot"></i>
+                            Verduras
+                        </button>
+                        <button class="category-btn" data-category="otros">
+                            <i class="fas fa-ellipsis-h"></i>
+                            Otros
+                        </button>
+                    </div>
+                    
+                    <div class="sort-controls">
+                        <select id="sortSelect" class="sort-select">
+                            <option value="nombre">Ordenar por nombre</option>
+                            <option value="precio-asc">Precio: menor a mayor</option>
+                            <option value="precio-desc">Precio: mayor a menor</option>
+                            <option value="favoritos">Favoritos primero</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loading Skeleton -->
+            <div id="loadingSkeleton" class="loading-skeleton" style="display: none;">
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+            </div>
+
+            <!-- Catálogo de Productos -->
+            <section class="productos-section">
+                <div class="productos-header">
+                    <h3 id="productosTitle">Nuestros Productos</h3>
+                    <div class="view-toggle">
+                        <button id="gridView" class="view-btn active" title="Vista de cuadrícula">
+                            <i class="fas fa-th"></i>
+                        </button>
+                        <button id="listView" class="view-btn" title="Vista de lista">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                </div>
+                <div id="productosGrid" class="productos-grid">
+                    <!-- Los productos con sliders se cargarán dinámicamente -->
+                </div>
+                <div id="noResultsMessage" class="no-results" style="display: none;">
+                    <i class="fas fa-search-minus"></i>
+                    <h4>No se encontraron productos</h4>
+                    <p>Intenta con otros términos de búsqueda</p>
+                </div>
+            </section>
+
+            <!-- Productos Favoritos (si hay) -->
+            <section id="favoritosSection" class="favoritos-section" style="display: none;">
+                <h3>❤️ Tus Favoritos</h3>
+                <div id="favoritosGrid" class="productos-grid favoritos-grid">
+                    <!-- Favoritos se cargan aquí -->
+                </div>
+            </section>
+
+            <!-- Carrito Flotante Mejorado -->
+            <div id="carritoFlotante" class="carrito-flotante">
+                <div class="carrito-header">
+                    <div class="carrito-title">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Mi Pedido</span>
+                        <div class="carrito-badge" id="carritoCount">0</div>
+                    </div>
+                    <div class="carrito-actions">
+                        <button id="clearCart" class="clear-cart-btn" title="Vaciar carrito">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        <button id="toggleCarrito" class="toggle-btn">
+                            <i class="fas fa-chevron-up"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="carrito-content">
+                    <div id="carritoItems" class="carrito-items">
+                        <div class="carrito-empty">
+                            <i class="fas fa-shopping-cart"></i>
+                            <p>Tu carrito está vacío</p>
+                            <small>Agrega productos para comenzar</small>
+                        </div>
+                    </div>
+                    <div class="carrito-summary">
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotalAmount">$0</span>
+                        </div>
+                        <div class="summary-row delivery-info">
+                            <span>
+                                <i class="fas fa-truck"></i>
+                                Retiro en tienda:
+                            </span>
+                            <span class="free">GRATIS</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Total:</span>
+                            <span id="totalAmount" class="total-amount">$0</span>
+                        </div>
+                    </div>
+                    <button id="finalizarPedido" class="btn-finalizar" disabled>
+                        <i class="fas fa-credit-card"></i>
+                        <span>Finalizar Pedido</span>
+                        <div class="btn-ripple"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- INTERFAZ DEL DUEÑO CON PESTAÑAS -->
+    <main id="negocioInterface" class="interface active">
+        <div class="container">
+            <!-- Navegación por pestañas del negocio -->
+            <nav class="business-navigation">
+                <div class="business-tabs">
+                    <button class="business-tab active" data-tab="dashboard">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </button>
+                    <button class="business-tab" data-tab="productos">
+                        <i class="fas fa-boxes"></i>
+                        <span>Productos Disponibles en Tienda</span>
+                    </button>
+                    <button class="business-tab" data-tab="configuracion">
+                        <i class="fas fa-cog"></i>
+                        <span>Configuración</span>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- PESTAÑA DASHBOARD (Portada Principal) -->
+            <div class="tab-content active" data-tab="dashboard">
+                <!-- Dashboard Principal -->
+                <section class="dashboard-section">
+                    <div class="dashboard-header">
+                        <h2>Dashboard de Negocio</h2>
+                        <div class="dashboard-date">
+                            <i class="fas fa-calendar"></i>
+                            <span id="currentDate"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card revenue">
+                            <div class="stat-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="stat-content">
+                                <span class="stat-number" id="totalVentas">$0</span>
+                                <span class="stat-label">Ventas de Hoy</span>
+                                <div class="stat-trend positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+12%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card products">
+                            <div class="stat-icon">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="stat-content">
+                                <span class="stat-number" id="totalProductos">0</span>
+                                <span class="stat-label">Productos Activos</span>
+                                <div class="stat-trend neutral">
+                                    <i class="fas fa-minus"></i>
+                                    <span>0%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card orders">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <span class="stat-number" id="pedidosPendientes">0</span>
+                                <span class="stat-label">Pedidos Pendientes</span>
+                                <div class="stat-action">
+                                    <button class="btn-quick-action" onclick="scrollToPedidos()">
+                                        Ver todos
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card customers">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <span class="stat-number" id="clientesAtendidos">0</span>
+                                <span class="stat-label">Pedidos Completados</span>
+                                <div class="stat-trend positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+8%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Pedidos Pendientes (Lo principal en la portada) -->
+                <section class="pedidos-section" id="pedidosSection">
+                    <div class="section-header">
+                        <h3>Pedidos Pendientes</h3>
+                        <div class="pedidos-filters">
+                            <button class="filter-btn active" data-filter="all">Todos</button>
+                            <button class="filter-btn" data-filter="pendiente">Pendientes</button>
+                            <button class="filter-btn" data-filter="confirmado">Confirmados</button>
+                            <button class="filter-btn" data-filter="rechazado">Rechazados</button>
+                        </div>
+                    </div>
+                    
+                    <div id="pedidosContainer" class="pedidos-container">
+                        <div class="no-pedidos">
+                            <i class="fas fa-clipboard-list"></i>
+                            <h4>No hay pedidos pendientes</h4>
+                            <p>Los nuevos pedidos aparecerán aquí</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- PESTAÑA PRODUCTOS DISPONIBLES EN TIENDA -->
+            <div class="tab-content" data-tab="productos">
+                <!-- Encabezado de la pestaña de productos -->
+                <div class="products-tab-header">
+                    <div class="products-tab-title">
+                        <div class="tab-icon">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        <h2>Productos Disponibles en Tienda</h2>
+                    </div>
+                    <div class="products-stats">
+                        <div class="products-stat">
+                            <span class="products-stat-number" id="productosActivosCount">0</span>
+                            <span class="products-stat-label">Activos</span>
+                        </div>
+                        <div class="products-stat">
+                            <span class="products-stat-number" id="productosBajoStockCount">0</span>
+                            <span class="products-stat-label">Bajo Stock</span>
+                        </div>
+                        <div class="products-stat">
+                            <span class="products-stat-number" id="productosDestacadosCount">0</span>
+                            <span class="products-stat-label">Destacados</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gestión de Productos -->
+                <section class="gestion-productos">
+                    <div class="section-header">
+                        <h3>Administrar Inventario con Sistema de Slider</h3>
+                        <div class="section-controls">
+                            <div class="search-mini">
+                                <i class="fas fa-search"></i>
+                                <input type="text" id="searchProductosAdmin" placeholder="Buscar productos...">
+                            </div>
+                            <button id="agregarProducto" class="btn-primary">
+                                <i class="fas fa-plus"></i>
+                                Agregar Producto
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="productos-admin-container">
+                        <div id="productosAdmin" class="productos-admin">
+                            <!-- Productos para administrar se cargan aquí -->
+                        </div>
+                        
+                        <div id="noProductsMessage" class="no-products" style="display: none;">
+                            <i class="fas fa-box-open"></i>
+                            <h4>No tienes productos aún</h4>
+                            <p>Comienza agregando tu primer producto con sistema de slider</p>
+                            <button class="btn-primary" onclick="showModalProducto()">
+                                <i class="fas fa-plus"></i>
+                                Agregar Primer Producto
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Quick Actions para productos -->
+                <section class="quick-actions">
+                    <div class="section-header">
+                        <h3>Acciones Rápidas de Inventario</h3>
+                    </div>
+                    <div class="actions-grid">
+                        <button id="agregarProductoSecundario" class="action-card">
+                            <div class="action-icon">
+                                <i class="fas fa-plus"></i>
+                            </div>
+                            <div class="action-content">
+                                <span class="action-title">Nuevo Producto</span>
+                                <span class="action-desc">Agregar producto con slider</span>
+                            </div>
+                        </button>
+                        
+                        <button class="action-card" onclick="exportarInventario()">
+                            <div class="action-icon">
+                                <i class="fas fa-download"></i>
+                            </div>
+                            <div class="action-content">
+                                <span class="action-title">Exportar Inventario</span>
+                                <span class="action-desc">Descargar lista de productos</span>
+                            </div>
+                        </button>
+                        
+                        <button class="action-card" onclick="importarInventario()">
+                            <div class="action-icon">
+                                <i class="fas fa-upload"></i>
+                            </div>
+                            <div class="action-content">
+                                <span class="action-title">Importar Productos</span>
+                                <span class="action-desc">Cargar productos desde archivo</span>
+                            </div>
+                        </button>
+                        
+                        <button class="action-card" onclick="alertasInventario()">
+                            <div class="action-icon">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <div class="action-content">
+                                <span class="action-title">Alertas de Stock</span>
+                                <span class="action-desc">Configurar notificaciones</span>
+                            </div>
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- PESTAÑA CONFIGURACIÓN -->
+            <div class="tab-content" data-tab="configuracion">
+                <section class="configuracion-section">
+                    <div class="section-header">
+                        <h3>Configuración del Negocio</h3>
+                        <p>Personaliza la configuración de tu tienda con sistema de slider</p>
+                    </div>
+                    
+                    <div class="config-grid">
+                        <div class="config-card">
+                            <h4><i class="fas fa-store"></i> Información del Negocio</h4>
+                            <p>Actualiza los datos de tu tienda</p>
+                            <button class="btn-primary" onclick="configurarNegocio()">Configurar</button>
+                        </div>
+                        
+                        <div class="config-card">
+                            <h4><i class="fas fa-bell"></i> Notificaciones</h4>
+                            <p>Gestiona alertas y notificaciones</p>
+                            <button class="btn-primary" onclick="configurarNotificaciones()">Configurar</button>
+                        </div>
+                        
+                        <div class="config-card">
+                            <h4><i class="fas fa-chart-bar"></i> Reportes</h4>
+                            <p>Accede a reportes y analytics</p>
+                            <button class="btn-primary" onclick="verAnalytics()">Ver Reportes</button>
+                        </div>
+                        
+                        <div class="config-card">
+                            <h4><i class="fas fa-download"></i> Exportar Datos</h4>
+                            <p>Descargar información del sistema de slider</p>
+                            <button class="btn-primary" onclick="exportarDatos()">Exportar</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODALES (Los mismos que antes) -->
+    
+    <!-- Modal Finalizar Pedido -->
+    <div id="modalPedido" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3>
+                    <i class="fas fa-credit-card"></i>
+                    Finalizar Pedido
+                </h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="pedido-tabs">
+                    <button class="tab-btn active" data-tab="resumen">
+                        <i class="fas fa-list"></i>
+                        Resumen
+                    </button>
+                    <button class="tab-btn" data-tab="pago">
+                        <i class="fas fa-credit-card"></i>
+                        Pago
+                    </button>
+                    <button class="tab-btn" data-tab="entrega">
+                        <i class="fas fa-clock"></i>
+                        Entrega
+                    </button>
+                </div>
+                
+                <!-- Tab Resumen -->
+                <div class="tab-content active" data-tab="resumen">
+                    <div class="pedido-resumen">
+                        <h4>
+                            <i class="fas fa-shopping-basket"></i>
+                            Tu pedido con cantidades flexibles
+                        </h4>
+                        <div id="resumenItems" class="resumen-items"></div>
+                        <div class="resumen-totales">
+                            <div class="total-line">
+                                <span>Subtotal:</span>
+                                <span id="resumenSubtotal">$0</span>
+                            </div>
+                            <div class="total-line">
+                                <span>Descuento:</span>
+                                <span id="resumenDescuento" class="discount">-$0</span>
+                            </div>
+                            <div class="total-line final">
+                                <strong>Total: <span id="resumenTotal">$0</span></strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tab Pago -->
+                <div class="tab-content" data-tab="pago">
+                    <div class="payment-section">
+                        <h4>
+                            <i class="fas fa-wallet"></i>
+                            Método de Pago
+                        </h4>
+                        <div class="payment-options">
+                            <label class="payment-option">
+                                <input type="radio" name="metodoPago" value="efectivo" checked>
+                                <div class="payment-card">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <div>
+                                        <strong>Efectivo</strong>
+                                        <p>Pagar al momento del retiro</p>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="payment-option">
+                                <input type="radio" name="metodoPago" value="tarjeta">
+                                <div class="payment-card">
+                                    <i class="fas fa-credit-card"></i>
+                                    <div>
+                                        <strong>Tarjeta</strong>
+                                        <p>Pagar con tarjeta en la tienda</p>
+                                    </div>
+                                </div>
+                            </label>
+                            
+                            <label class="payment-option">
+                                <input type="radio" name="metodoPago" value="pagado">
+                                <div class="payment-card">
+                                    <i class="fas fa-check-circle"></i>
+                                    <div>
+                                        <strong>Ya Pagado</strong>
+                                        <p>Transferencia o pago online</p>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        
+                        <div class="discount-section">
+                            <h5>¿Tienes un código de descuento?</h5>
+                            <div class="discount-input">
+                                <input type="text" id="codigoDescuento" placeholder="Ingresa tu código">
+                                <button class="btn-apply-discount">Aplicar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tab Entrega -->
+                <div class="tab-content" data-tab="entrega">
+                    <div class="delivery-section">
+                        <h4>
+                            <i class="fas fa-store"></i>
+                            Información de Retiro
+                        </h4>
+                        
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-clock"></i>
+                                Hora de retiro:
+                            </label>
+                            <input type="time" id="horaRetiro" class="form-control" required>
+                            <small class="form-help">El pedido estará listo en aproximadamente 30 minutos</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-user"></i>
+                                Nombre para el pedido:
+                            </label>
+                            <input type="text" id="nombreCliente" class="form-control" placeholder="Tu nombre" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-phone"></i>
+                                Teléfono (opcional):
+                            </label>
+                            <input type="tel" id="telefonoCliente" class="form-control" placeholder="+56 9 1234 5678">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>
+                                <i class="fas fa-comment"></i>
+                                Comentarios adicionales:
+                            </label>
+                            <textarea id="comentarios" class="form-control" rows="3" placeholder="Alguna especificación especial..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelarPedido" class="btn-secondary">
+                    <i class="fas fa-times"></i>
+                    Cancelar
+                </button>
+                <button id="confirmarPedido" class="btn-primary btn-large">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Enviar Pedido</span>
+                    <div class="btn-ripple"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Producto Mejorado -->
+    <div id="modalProducto" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3 id="modalProductoTitle">
+                    <i class="fas fa-plus"></i>
+                    Agregar Producto con Sistema de Slider
+                </h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="formProducto">
+                    <div class="form-grid">
+                        <div class="form-left">
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-tag"></i>
+                                    Nombre del producto:
+                                </label>
+                                <input type="text" id="productoNombre" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-align-left"></i>
+                                    Descripción:
+                                </label>
+                                <textarea id="productoDescripcion" class="form-control" rows="3"></textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>
+                                        <i class="fas fa-dollar-sign"></i>
+                                        Precio por unidad:
+                                    </label>
+                                    <input type="number" id="productoPrecioUnidad" class="form-control" step="0.01" min="0" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        <i class="fas fa-weight-hanging"></i>
+                                        Unidad de medida:
+                                    </label>
+                                    <input type="text" id="productoUnidadMedida" class="form-control" placeholder="ej: 100g, unidad, 250ml">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>
+                                        <i class="fas fa-minus"></i>
+                                        Cantidad mínima:
+                                    </label>
+                                    <input type="number" id="productoCantidadMinima" class="form-control" min="1" value="1" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        <i class="fas fa-plus"></i>
+                                        Cantidad máxima:
+                                    </label>
+                                    <input type="number" id="productoCantidadMaxima" class="form-control" min="1" value="50" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>
+                                        <i class="fas fa-list"></i>
+                                        Categoría:
+                                    </label>
+                                    <select id="productoCategoria" class="form-control">
+                                        <option value="otros">Otros</option>
+                                        <option value="panaderia">Panadería</option>
+                                        <option value="lacteos">Lácteos</option>
+                                        <option value="verduras">Verduras</option>
+                                        <option value="carnes">Carnes</option>
+                                        <option value="bebidas">Bebidas</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>
+                                        <i class="fas fa-boxes"></i>
+                                        Stock total disponible:
+                                    </label>
+                                    <input type="number" id="productoStockTotal" class="form-control" min="0" value="50">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-right">
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-image"></i>
+                                    Imagen del producto:
+                                </label>
+                                <div class="image-upload">
+                                    <input type="file" id="productoImagen" class="file-input" accept="image/*">
+                                    <div class="upload-area" onclick="document.getElementById('productoImagen').click()">
+                                        <i class="fas fa-cloud-upload-alt"></i>
+                                        <p>Haz clic para subir una imagen</p>
+                                        <small>JPG, PNG o GIF (máx. 2MB)</small>
+                                    </div>
+                                    <div id="imagenPreview" class="imagen-preview"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="productoDestacado" class="checkbox">
+                                    <span class="checkmark"></span>
+                                    Producto destacado
+                                </label>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="productoActivo" class="checkbox" checked>
+                                    <span class="checkmark"></span>
+                                    Producto activo
+                                </label>
+                            </div>
+                            
+                            <div class="slider-preview">
+                                <h5>Vista previa del slider:</h5>
+                                <div class="cantidad-slider-container">
+                                    <div class="slider-header">
+                                        <div class="slider-label">
+                                            <i class="fas fa-sliders-h"></i>
+                                            Cantidad:
+                                        </div>
+                                        <div class="cantidad-display">
+                                            1 unidad
+                                        </div>
+                                    </div>
+                                    <input type="range" class="cantidad-slider" min="1" max="10" value="1" disabled>
+                                    <div class="precio-dinamico">
+                                        <div class="precio-total">$0</div>
+                                        <div class="precio-unidad">$0 por unidad</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelarProducto" class="btn-secondary">
+                    <i class="fas fa-times"></i>
+                    Cancelar
+                </button>
+                <button id="guardarProducto" class="btn-primary btn-large">
+                    <i class="fas fa-save"></i>
+                    <span>Guardar Producto</span>
+                    <div class="btn-ripple"></div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Confirmación Mejorado -->
+    <div id="modalConfirmacion" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>
+                    <i class="fas fa-check-circle success-icon"></i>
+                    ¡Pedido Enviado!
+                </h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="confirmacion-animation">
+                    <div class="success-checkmark">
+                        <div class="check-icon">
+                            <span class="icon-line line-tip"></span>
+                            <span class="icon-line line-long"></span>
+                            <div class="icon-circle"></div>
+                            <div class="icon-fix"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="confirmacion-content">
+                    <p class="confirmacion-main">Tu pedido con cantidades flexibles ha sido enviado correctamente y está <strong>pendiente de verificación</strong>.</p>
+                    <p class="confirmacion-sub">El negocio revisará tu pedido y te confirmará si estará listo a la hora solicitada.</p>
+                    
+                    <div class="pedido-info-card">
+                        <div class="info-row">
+                            <span class="info-label">
+                                <i class="fas fa-clock"></i>
+                                Hora de retiro:
+                            </span>
+                            <span id="confirmacionHora" class="info-value"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">
+                                <i class="fas fa-dollar-sign"></i>
+                                Total:
+                            </span>
+                            <span id="confirmacionTotal" class="info-value"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">
+                                <i class="fas fa-credit-card"></i>
+                                Método de pago:
+                            </span>
+                            <span id="confirmacionPago" class="info-value"></span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">
+                                <i class="fas fa-user"></i>
+                                Nombre:
+                            </span>
+                            <span id="confirmacionNombre" class="info-value"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="next-steps">
+                        <h5>¿Qué sigue?</h5>
+                        <ul>
+                            <li><i class="fas fa-clock"></i> Espera la confirmación del negocio</li>
+                            <li><i class="fas fa-bell"></i> Recibirás una notificación cuando esté listo</li>
+                            <li><i class="fas fa-store"></i> Retira tu pedido en la hora acordada</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="cerrarConfirmacion" class="btn-primary btn-large">
+                    <i class="fas fa-thumbs-up"></i>
+                    ¡Perfecto!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Procesando pedido con cantidades flexibles...</p>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales para evitar conflictos
+        let currentBusinessTab = 'dashboard';
+        let businessTabsInitialized = false;
+
+        // Agregar funcionalidad del botón de ir atrás
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔧 Inicializando sistema de pestañas con slider...');
+            
+            const backButton = document.getElementById('backButton');
+            if (backButton) {
+                backButton.addEventListener('click', function() {
+                    window.location.href = 'portada-index.html';
+                });
+            }
+
+            // Esperar a que el script principal se cargue
+            setTimeout(() => {
+                setupBusinessTabs();
+                initializeTabContent();
+            }, 500);
+        });
+
+        // Sistema de pestañas para el área de negocios
+        function setupBusinessTabs() {
+            if (businessTabsInitialized) {
+                console.log('⚠️ Pestañas ya inicializadas');
+                return;
+            }
+
+            const businessTabs = document.querySelectorAll('.business-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            console.log(`📋 Encontradas ${businessTabs.length} pestañas y ${tabContents.length} contenidos`);
+
+            if (businessTabs.length === 0) {
+                console.error('❌ No se encontraron pestañas de negocio');
+                return;
+            }
+
+            businessTabs.forEach((tab, index) => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    const tabName = tab.dataset.tab;
+                    console.log(`🔄 Cambiando a pestaña: ${tabName}`);
+                    
+                    if (tabName === currentBusinessTab) {
+                        console.log('ℹ️ Ya está en la pestaña actual');
+                        return;
+                    }
+
+                    switchToTab(tabName, businessTabs, tabContents);
+                });
+            });
+
+            businessTabsInitialized = true;
+            console.log('✅ Sistema de pestañas con slider inicializado correctamente');
+        }
+
+        // Función para cambiar de pestaña
+        function switchToTab(tabName, businessTabs, tabContents) {
+            try {
+                // Remover active de todos los tabs
+                businessTabs.forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // Ocultar todos los contenidos
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    content.style.display = 'none';
+                });
+                
+                // Activar tab seleccionado
+                const activeTab = document.querySelector(`[data-tab="${tabName}"].business-tab`);
+                if (activeTab) {
+                    activeTab.classList.add('active');
+                }
+                
+                // Mostrar contenido correspondiente
+                const targetContent = document.querySelector(`[data-tab="${tabName}"].tab-content`);
+                if (targetContent) {
+                    targetContent.style.display = 'block';
+                    targetContent.classList.add('active');
+                    
+                    // Pequeño delay para la animación
+                    setTimeout(() => {
+                        targetContent.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                }
+
+                // Actualizar pestaña actual
+                currentBusinessTab = tabName;
+
+                // Actualizar contenido específico según la pestaña
+                setTimeout(() => {
+                    updateTabContent(tabName);
+                }, 200);
+
+                console.log(`✅ Cambio a pestaña ${tabName} completado`);
+                
+            } catch (error) {
+                console.error('❌ Error al cambiar pestaña:', error);
+            }
+        }
+
+        // Inicializar contenido de pestañas
+        function initializeTabContent() {
+            console.log('🔧 Inicializando contenido de pestañas con sistema de slider...');
+            
+            // Asegurarse de que la pestaña dashboard esté activa al inicio
+            const dashboardTab = document.querySelector('[data-tab="dashboard"].business-tab');
+            const dashboardContent = document.querySelector('[data-tab="dashboard"].tab-content');
+            
+            if (dashboardTab && dashboardContent) {
+                dashboardTab.classList.add('active');
+                dashboardContent.style.display = 'block';
+                dashboardContent.classList.add('active');
+                currentBusinessTab = 'dashboard';
+            }
+
+            // Configurar event listeners para botones de gestión
+            setupProductManagementButtons();
+        }
+
+        // Configurar botones de gestión de productos
+        function setupProductManagementButtons() {
+            // Botón principal de agregar producto
+            const agregarProductoBtn = document.getElementById('agregarProducto');
+            if (agregarProductoBtn) {
+                agregarProductoBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('🔧 Abriendo modal de producto con sistema de slider...');
+                    
+                    // Verificar si la función existe en el script principal
+                    if (typeof showModalProducto === 'function') {
+                        showModalProducto();
+                    } else {
+                        console.error('❌ Función showModalProducto no encontrada');
+                        alert('Por favor, asegúrate de que el script principal esté cargado');
+                    }
+                });
+            }
+
+            // Botón secundario de agregar producto
+            const agregarProductoSecBtn = document.getElementById('agregarProductoSecundario');
+            if (agregarProductoSecBtn) {
+                agregarProductoSecBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    if (typeof showModalProducto === 'function') {
+                        showModalProducto();
+                    } else {
+                        alert('Por favor, asegúrate de que el script principal esté cargado');
+                    }
+                });
+            }
+
+            // Búsqueda de productos admin
+            const searchProductosAdmin = document.getElementById('searchProductosAdmin');
+            if (searchProductosAdmin) {
+                searchProductosAdmin.addEventListener('input', (e) => {
+                    if (typeof handleAdminSearch === 'function') {
+                        handleAdminSearch(e);
+                    }
+                });
+            }
+
+            console.log('✅ Botones de gestión con sistema de slider configurados');
+        }
+
+        // Actualizar contenido específico de cada pestaña
+        function updateTabContent(tabName) {
+            console.log(`🔄 Actualizando contenido para pestaña: ${tabName}`);
+            
+            try {
+                switch(tabName) {
+                    case 'dashboard':
+                        updateDashboardStats();
+                        // Renderizar pedidos si la función existe
+                        if (typeof renderPedidos === 'function') {
+                            setTimeout(renderPedidos, 100);
+                        }
+                        break;
+                        
+                    case 'productos':
+                        updateProductsTabStats();
+                        // Renderizar productos admin si la función existe
+                        if (typeof renderProductosAdmin === 'function') {
+                            setTimeout(renderProductosAdmin, 100);
+                        } else {
+                            console.warn('⚠️ Función renderProductosAdmin no encontrada');
+                        }
+                        break;
+                        
+                    case 'configuracion':
+                        console.log('ℹ️ Pestaña de configuración cargada');
+                        break;
+                        
+                    default:
+                        console.warn(`⚠️ Pestaña desconocida: ${tabName}`);
+                }
+            } catch (error) {
+                console.error(`❌ Error actualizando contenido de pestaña ${tabName}:`, error);
+            }
+        }
+
+        // Actualizar estadísticas de la pestaña de productos
+        function updateProductsTabStats() {
+            try {
+                if (typeof productos !== 'undefined' && Array.isArray(productos)) {
+                    const productosActivos = productos.filter(p => p.activo).length;
+                    const productosBajoStock = productos.filter(p => p.stockTotal <= 5).length;
+                    const productosDestacados = productos.filter(p => p.destacado).length;
+
+                    const activosEl = document.getElementById('productosActivosCount');
+                    const bajoStockEl = document.getElementById('productosBajoStockCount');
+                    const destacadosEl = document.getElementById('productosDestacadosCount');
+
+                    if (activosEl) activosEl.textContent = productosActivos;
+                    if (bajoStockEl) bajoStockEl.textContent = productosBajoStock;
+                    if (destacadosEl) destacadosEl.textContent = productosDestacados;
+
+                    console.log(`📊 Estadísticas del sistema de slider actualizadas: ${productosActivos} activos, ${productosBajoStock} bajo stock, ${productosDestacados} destacados`);
+                } else {
+                    console.warn('⚠️ Variable productos no disponible o no es array');
+                    
+                    // Valores por defecto
+                    const activosEl = document.getElementById('productosActivosCount');
+                    const bajoStockEl = document.getElementById('productosBajoStockCount');
+                    const destacadosEl = document.getElementById('productosDestacadosCount');
+
+                    if (activosEl) activosEl.textContent = '0';
+                    if (bajoStockEl) bajoStockEl.textContent = '0';
+                    if (destacadosEl) destacadosEl.textContent = '0';
+                }
+            } catch (error) {
+                console.error('❌ Error actualizando estadísticas de productos:', error);
+            }
+        }
+
+        // Actualizar estadísticas del dashboard
+        function updateDashboardStats() {
+            try {
+                if (typeof updateAdminStats === 'function') {
+                    updateAdminStats();
+                    console.log('📊 Estadísticas del dashboard actualizadas');
+                } else {
+                    console.warn('⚠️ Función updateAdminStats no encontrada');
+                }
+            } catch (error) {
+                console.error('❌ Error actualizando estadísticas del dashboard:', error);
+            }
+        }
+
+        // Funciones para las acciones rápidas
+        function exportarInventario() {
+            console.log('📤 Exportando inventario con sistema de slider...');
+            if (typeof exportarReporteSlider === 'function') {
+                exportarReporteSlider();
+            } else if (typeof exportarDatos === 'function') {
+                exportarDatos();
+            } else {
+                alert('Función de exportar inventario en desarrollo');
+            }
+        }
+
+        function importarInventario() {
+            console.log('📥 Importando inventario...');
+            alert('Función de importar inventario en desarrollo');
+        }
+
+        function alertasInventario() {
+            console.log('🔔 Configurando alertas de slider...');
+            alert('Función de alertas de inventario en desarrollo');
+        }
+
+        function configurarNotificaciones() {
+            console.log('🔔 Configurando notificaciones...');
+            alert('Función de configurar notificaciones en desarrollo');
+        }
+
+        // Función global para mostrar modal de producto (fallback)
+        window.showModalProducto = window.showModalProducto || function() {
+            console.log('🔧 Usando fallback para showModalProducto del sistema de slider');
+            alert('Modal de producto será implementado cuando se cargue el script principal');
+        };
+
+        // Debug: función para verificar estado
+        function debugBusinessTabs() {
+            console.log('🔍 Estado actual del sistema de pestañas con slider:');
+            console.log('- Pestaña actual:', currentBusinessTab);
+            console.log('- Pestañas inicializadas:', businessTabsInitialized);
+            console.log('- Productos disponibles:', typeof productos !== 'undefined');
+            console.log('- Función showModalProducto:', typeof showModalProducto);
+            console.log('- Función renderProductosAdmin:', typeof renderProductosAdmin);
+            console.log('- Sistema de slider cargado:', typeof updateSliderValue !== 'undefined');
+        }
+
+        // Exponer función de debug globalmente
+        window.debugBusinessTabs = debugBusinessTabs;
+
+        console.log('🎚️ HTML del sistema de slider cargado correctamente');
+    </script>
+        
+    
+    <!-- Sistemas base existentes (MANTENER) -->
+    <script src="payment-simulator.js"></script>
+    <script src="order-notifications.js"></script>
+    <script src="order-status-manager.js"></script>
+    <script src="payment-integration.js"></script>
+
+    <!-- NUEVOS SISTEMAS DE INTEGRACIÓN PANEL -->
+    <script src="panel-order-sync-manager.js"></script>
+    <script src="panel-real-time-updates.js"></script>
+    <script src="panel-payment-bridge.js"></script>
+
+    <!-- NUEVOS SISTEMAS (AGREGAR) -->
+    <script src="sync-manager.js"></script>
+    <script src="real-time-connector.js"></script>
+    <script src="digital-receipt-generator.js"></script>
+    <script src="order-refund-manager.js"></script>
+    <script src="script-integration.js"></script>
+
+    <!-- Script principal con sistema de slider (MANTENER AL FINAL) -->
+    <script src="script.js"></script>
+    <script src="geolocation.js"></script>
+
+        
+</body>
+</html>

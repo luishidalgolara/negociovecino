@@ -1,0 +1,1899 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Multi-Negocio - Panel de Administración</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --danger-color: #ef4444;
+            --warning-color: #f59e0b;
+            --success-color: #10b981;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --text-light: #9ca3af;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f9fafb;
+            --bg-accent: #f3f4f6;
+            --border-color: #e5e7eb;
+            --border-light: #f3f4f6;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 1.5rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 2rem 2.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="1" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            pointer-events: none;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header h1 {
+            font-size: 2.75rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .header .icon {
+            font-size: 2.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            width: 4rem;
+            height: 4rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .header p {
+            font-size: 1.125rem;
+            opacity: 0.9;
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .nav-tabs {
+            display: flex;
+            background: var(--bg-secondary);
+            border-bottom: 2px solid var(--border-light);
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            flex: 1;
+            min-width: 140px;
+            padding: 1.25rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            font-size: 0.95rem;
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            color: var(--text-secondary);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .nav-tab i {
+            font-size: 1.1rem;
+        }
+
+        .nav-tab.active {
+            background: var(--bg-primary);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .nav-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+        }
+
+        .nav-tab:hover:not(.active) {
+            background: var(--bg-accent);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        .tab-content {
+            display: none;
+            padding: 2.5rem;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tab-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab-header h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .tab-header i {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        label i {
+            color: var(--primary-color);
+            width: 1.2rem;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            transform: translateY(-1px);
+        }
+
+        input:hover, select:hover, textarea:hover {
+            border-color: var(--text-secondary);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 0.875rem 1.75rem;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--text-secondary), var(--text-light));
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning-color), #d97706);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger-color), #dc2626);
+        }
+
+        .business-card {
+            background: var(--bg-primary);
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .business-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .business-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .business-card:hover::before {
+            opacity: 1;
+        }
+
+        .business-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.25rem;
+        }
+
+        .business-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .business-name i {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .business-status {
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-active {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+            color: white;
+        }
+
+        .status-inactive {
+            background: linear-gradient(135deg, var(--danger-color), #dc2626);
+            color: white;
+        }
+
+        .business-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item {
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .info-label {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .business-actions {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .business-actions .btn {
+            padding: 0.625rem 1.25rem;
+            font-size: 0.875rem;
+        }
+
+        .alert {
+            padding: 1.25rem 1.5rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-left: 4px solid;
+        }
+
+        .alert i {
+            font-size: 1.2rem;
+        }
+
+        .alert-success {
+            background: #ecfdf5;
+            color: #065f46;
+            border-left-color: var(--success-color);
+        }
+
+        .alert-error {
+            background: #fef2f2;
+            color: #991b1b;
+            border-left-color: var(--danger-color);
+        }
+
+        .alert-warning {
+            background: #fffbeb;
+            color: #92400e;
+            border-left-color: var(--warning-color);
+        }
+
+        .alert-info {
+            background: #eff6ff;
+            color: #1e40af;
+            border-left-color: var(--primary-color);
+        }
+
+        .payment-form {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            border: 2px dashed var(--primary-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-form::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.03) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .payment-form h3 {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-weight: 600;
+        }
+
+        .security-info {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border: 2px solid var(--warning-color);
+            color: #92400e;
+            padding: 1.25rem 1.5rem;
+            border-radius: var(--radius-md);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .security-info i {
+            color: var(--warning-color);
+            font-size: 1.2rem;
+            margin-top: 0.125rem;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-primary);
+            padding: 2rem;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .spinner {
+            width: 3rem;
+            height: 3rem;
+            border: 4px solid var(--border-light);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .code-section {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: var(--radius-md);
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            border-left: 4px solid var(--primary-color);
+            position: relative;
+        }
+
+        .code-section::before {
+            content: attr(data-language);
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .spec-section {
+            margin: 2rem 0;
+            padding: 2rem;
+            border-left: 4px solid var(--primary-color);
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        }
+
+        .spec-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .spec-title i {
+            color: var(--primary-color);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+            padding: 1.5rem;
+            border-radius: var(--radius-lg);
+            border: 2px solid var(--border-light);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-color);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                border-radius: var(--radius-lg);
+            }
+
+            .header {
+                padding: 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .header .icon {
+                width: 3rem;
+                height: 3rem;
+                font-size: 1.5rem;
+            }
+
+            .tab-content {
+                padding: 1.5rem;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .business-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .business-actions {
+                flex-direction: column;
+            }
+
+            .nav-tabs {
+                flex-wrap: wrap;
+            }
+
+            .nav-tab {
+                min-width: auto;
+                flex: 1 1 calc(50% - 1px);
+            }
+        }
+
+        /* Mejoras adicionales para animaciones */
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .slide-up {
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scrollbar personalizado */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-sm);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-light);
+            border-radius: var(--radius-sm);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <h1>
+                    <div class="icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    Plataforma Multi-Negocio
+                </h1>
+                <p>Sistema de gestión y pagos integrados para múltiples comercios</p>
+            </div>
+        </div>
+
+        <div class="nav-tabs">
+            <button class="nav-tab active" onclick="showTab('businesses')">
+                <i class="fas fa-building"></i>
+                <span>Negocios</span>
+            </button>
+            <button class="nav-tab" onclick="showTab('payments')">
+                <i class="fas fa-credit-card"></i>
+                <span>Configurar Pagos</span>
+            </button>
+            <button class="nav-tab" onclick="showTab('checkout')">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Checkout Demo</span>
+            </button>
+            <button class="nav-tab" onclick="showTab('backend')">
+                <i class="fas fa-server"></i>
+                <span>Backend/API</span>
+            </button>
+            <button class="nav-tab" onclick="showTab('security')">
+                <i class="fas fa-shield-alt"></i>
+                <span>Seguridad</span>
+            </button>
+        </div>
+
+        <!-- TAB: GESTIÓN DE NEGOCIOS -->
+        <div id="businesses" class="tab-content active">
+            <div class="tab-header">
+                <h2><i class="fas fa-chart-line"></i>Gestión de Negocios</h2>
+            </div>
+            
+            <div class="security-info">
+                <i class="fas fa-lock"></i>
+                <div>
+                    <strong>Seguridad:</strong> Las credenciales de pago se almacenan cifradas y cada negocio solo puede acceder a sus propios datos.
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number" id="totalBusinesses">2</span>
+                    <span class="stat-label">Negocios Activos</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">$1.2M</span>
+                    <span class="stat-label">Volumen Mensual</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">324</span>
+                    <span class="stat-label">Transacciones</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">98.5%</span>
+                    <span class="stat-label">Éxito en Pagos</span>
+                </div>
+            </div>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label><i class="fas fa-store"></i>Nombre del Negocio</label>
+                    <input type="text" id="businessName" placeholder="Ej: Tienda La Esquina">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i>Email de Contacto</label>
+                    <input type="email" id="businessEmail" placeholder="contacto@tienda.com">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-id-card"></i>RUT/ID Fiscal</label>
+                    <input type="text" id="businessRUT" placeholder="12.345.678-9">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-phone"></i>Teléfono</label>
+                    <input type="tel" id="businessPhone" placeholder="+56 9 1234 5678">
+                </div>
+                <div class="form-group full-width">
+                    <label><i class="fas fa-map-marker-alt"></i>Dirección</label>
+                    <input type="text" id="businessAddress" placeholder="Av. Principal 123, Santiago">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-tags"></i>Categoría</label>
+                    <select id="businessCategory">
+                        <option value="">Seleccionar...</option>
+                        <option value="retail">Retail</option>
+                        <option value="restaurant">Restaurante</option>
+                        <option value="services">Servicios</option>
+                        <option value="digital">Digital</option>
+                        <option value="other">Otro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-percentage"></i>Comisión (%)</label>
+                    <input type="number" id="businessCommission" placeholder="2.5" min="0" max="10" step="0.1">
+                </div>
+            </div>
+
+            <button class="btn" onclick="addBusiness()">
+                <i class="fas fa-plus"></i>
+                Agregar Negocio
+            </button>
+
+            <div id="businessAlert"></div>
+
+            <h3 style="margin: 2rem 0 1rem 0; color: var(--text-primary); font-weight: 600;">Negocios Registrados</h3>
+            <div id="businessesList"></div>
+        </div>
+
+        <!-- TAB: CONFIGURACIÓN DE PAGOS -->
+        <div id="payments" class="tab-content">
+            <div class="tab-header">
+                <h2><i class="fas fa-credit-card"></i>Configuración de Pagos por Negocio</h2>
+            </div>
+            
+            <div class="security-info">
+                <i class="fas fa-shield-alt"></i>
+                <div>
+                    <strong>Importante:</strong> Cada negocio debe configurar sus propias credenciales de Webpay/Transbank. Los fondos van directamente a su cuenta.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label><i class="fas fa-building"></i>Seleccionar Negocio</label>
+                <select id="paymentBusinessSelect" onchange="loadPaymentConfig()">
+                    <option value="">Seleccionar negocio...</option>
+                </select>
+            </div>
+
+            <div id="paymentConfigForm" class="payment-form" style="display: none;">
+                <h3><i class="fas fa-cog"></i>Configuración Webpay Plus</h3>
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label><i class="fas fa-key"></i>Código de Comercio</label>
+                        <input type="text" id="commerceCode" placeholder="597012345678">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-globe"></i>Ambiente</label>
+                        <select id="environment">
+                            <option value="integration">Integración (Test)</option>
+                            <option value="production">Producción</option>
+                        </select>
+                    </div>
+                    <div class="form-group full-width">
+                        <label><i class="fas fa-lock"></i>Clave Privada (Private Key)</label>
+                        <textarea id="privateKey" rows="4" placeholder="-----BEGIN RSA PRIVATE KEY-----&#10;...&#10;-----END RSA PRIVATE KEY-----"></textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label><i class="fas fa-certificate"></i>Certificado Público (Public Cert)</label>
+                        <textarea id="publicCert" rows="4" placeholder="-----BEGIN CERTIFICATE-----&#10;...&#10;-----END CERTIFICATE-----"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-link"></i>URL de Retorno</label>
+                    <input type="url" id="returnUrl" placeholder="https://minegocio.com/pago/exitoso">
+                </div>
+
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button class="btn btn-success" onclick="savePaymentConfig()">
+                        <i class="fas fa-save"></i>
+                        Guardar Configuración
+                    </button>
+                    <button class="btn btn-warning" onclick="testPaymentConfig()">
+                        <i class="fas fa-flask"></i>
+                        Probar Conexión
+                    </button>
+                </div>
+            </div>
+
+            <div id="paymentAlert"></div>
+        </div>
+
+        <!-- TAB: DEMO CHECKOUT -->
+        <div id="checkout" class="tab-content">
+            <div class="tab-header">
+                <h2><i class="fas fa-shopping-cart"></i>Demo de Checkout</h2>
+            </div>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label><i class="fas fa-building"></i>Seleccionar Negocio</label>
+                    <select id="checkoutBusinessSelect">
+                        <option value="">Seleccionar negocio...</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-box"></i>Producto/Servicio</label>
+                    <input type="text" id="productName" placeholder="Producto de prueba" value="Producto de prueba">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-dollar-sign"></i>Monto (CLP)</label>
+                    <input type="number" id="amount" placeholder="10000" value="10000">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i>Email del Cliente</label>
+                    <input type="email" id="customerEmail" placeholder="cliente@email.com">
+                </div>
+            </div>
+
+            <button class="btn" onclick="initiatePayment()">
+                <i class="fas fa-credit-card"></i>
+                Procesar Pago
+            </button>
+
+            <div id="checkoutAlert"></div>
+            <div id="paymentResult"></div>
+        </div>
+
+        <!-- TAB: BACKEND/API -->
+        <div id="backend" class="tab-content">
+            <div class="tab-header">
+                <h2><i class="fas fa-server"></i>Especificaciones del Backend</h2>
+            </div>
+
+            <div class="spec-section">
+                <div class="spec-title"><i class="fas fa-database"></i>Base de Datos (PostgreSQL)</div>
+                <div class="code-section" data-language="SQL">-- Tabla de Negocios
+CREATE TABLE businesses (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    rut VARCHAR(20) UNIQUE NOT NULL,
+    phone VARCHAR(50),
+    address TEXT,
+    category VARCHAR(100),
+    commission_rate DECIMAL(5,2) DEFAULT 0.00,
+    status VARCHAR(20) DEFAULT 'active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Tabla de Configuración de Pagos (Cifrada)
+CREATE TABLE payment_configs (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    business_id UUID REFERENCES businesses(id) ON DELETE CASCADE,
+    provider VARCHAR(50) DEFAULT 'webpay',
+    commerce_code VARCHAR(100) NOT NULL,
+    environment VARCHAR(20) DEFAULT 'integration',
+    private_key_encrypted TEXT NOT NULL,
+    public_cert_encrypted TEXT NOT NULL,
+    return_url VARCHAR(500),
+    webhook_url VARCHAR(500),
+    is_active BOOLEAN DEFAULT true,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(business_id, provider)
+);
+
+-- Tabla de Transacciones
+CREATE TABLE transactions (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    business_id UUID REFERENCES businesses(id),
+    transaction_id VARCHAR(100) UNIQUE NOT NULL,
+    session_id VARCHAR(100),
+    amount DECIMAL(12,2) NOT NULL,
+    currency VARCHAR(3) DEFAULT 'CLP',
+    status VARCHAR(50) DEFAULT 'pending',
+    payment_method VARCHAR(50),
+    customer_email VARCHAR(255),
+    product_description TEXT,
+    provider_response JSONB,
+    commission_amount DECIMAL(12,2),
+    net_amount DECIMAL(12,2),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    completed_at TIMESTAMP
+);
+
+-- Índices para rendimiento
+CREATE INDEX idx_businesses_status ON businesses(status);
+CREATE INDEX idx_transactions_business_id ON transactions(business_id);
+CREATE INDEX idx_transactions_status ON transactions(status);
+CREATE INDEX idx_transactions_created_at ON transactions(created_at);
+                </div>
+            </div>
+
+            <div class="spec-section">
+                <div class="spec-title"><i class="fas fa-plug"></i>API Endpoints</div>
+                <div class="code-section" data-language="REST">// Gestión de Negocios
+POST   /api/v1/businesses              - Crear negocio
+GET    /api/v1/businesses              - Listar negocios
+GET    /api/v1/businesses/{id}         - Obtener negocio
+PUT    /api/v1/businesses/{id}         - Actualizar negocio
+DELETE /api/v1/businesses/{id}         - Eliminar negocio
+
+// Configuración de Pagos
+POST   /api/v1/businesses/{id}/payment-config   - Configurar pagos
+GET    /api/v1/businesses/{id}/payment-config   - Obtener config
+PUT    /api/v1/businesses/{id}/payment-config   - Actualizar config
+POST   /api/v1/businesses/{id}/test-connection  - Probar conexión
+
+// Procesamiento de Pagos
+POST   /api/v1/payments/initiate       - Iniciar pago
+POST   /api/v1/payments/confirm        - Confirmar pago
+POST   /api/v1/payments/webhook        - Webhook de notificación
+GET    /api/v1/payments/{transactionId} - Estado de transacción
+
+// Reportes y Analytics
+GET    /api/v1/businesses/{id}/transactions     - Transacciones del negocio
+GET    /api/v1/businesses/{id}/analytics        - Analytics del negocio
+GET    /api/v1/platform/analytics               - Analytics de plataforma
+                </div>
+            </div>
+
+            <div class="spec-section">
+                <div class="spec-title"><i class="fas fa-sync-alt"></i>Flujo de Pago</div>
+                <div class="code-section" data-language="JSON">// 1. Iniciar Pago
+POST /api/v1/payments/initiate
+{
+  "business_id": "uuid",
+  "amount": 15000,
+  "currency": "CLP",
+  "product_description": "Producto X",
+  "customer_email": "cliente@email.com",
+  "return_url": "https://tienda.com/pago-exitoso"
+}
+
+// Respuesta:
+{
+  "transaction_id": "TXN_123456",
+  "session_id": "SES_789",
+  "payment_url": "https://webpay3gint.transbank.cl/webpayserver/...",
+  "token": "TOKEN_ABC123"
+}
+
+// 2. Cliente es redirigido a Webpay
+// 3. Tras pagar, Webpay redirige a return_url con token
+
+// 4. Confirmar Pago
+POST /api/v1/payments/confirm
+{
+  "token": "TOKEN_ABC123"
+}
+
+// Respuesta:
+{
+  "transaction_id": "TXN_123456",
+  "status": "approved",
+  "amount": 15000,
+  "authorization_code": "AUTH123",
+  "payment_type": "VD",
+  "business_id": "uuid",
+  "commission": 375.00,
+  "net_amount": 14625.00
+}
+                </div>
+            </div>
+
+            <div class="spec-section">
+                <div class="spec-title"><i class="fas fa-shield-alt"></i>Middleware de Seguridad</div>
+                <div class="code-section" data-language="JS">// Autenticación por API Key por negocio
+const authenticateBusiness = (req, res, next) => {
+  const apiKey = req.headers['x-api-key'];
+  const businessId = req.params.businessId || req.body.business_id;
+  
+  // Validar que API key corresponde al negocio
+  if (!validateApiKey(apiKey, businessId)) {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  
+  req.businessId = businessId;
+  next();
+};
+
+// Cifrado de credenciales sensibles
+const encryptPaymentCredentials = (credentials) => {
+  const key = process.env.ENCRYPTION_KEY;
+  return CryptoJS.AES.encrypt(JSON.stringify(credentials), key).toString();
+};
+
+const decryptPaymentCredentials = (encryptedData) => {
+  const key = process.env.ENCRYPTION_KEY;
+  const bytes = CryptoJS.AES.decrypt(encryptedData, key);
+  return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+};
+
+// Validación de webhooks
+const validateWebhook = (req, res, next) => {
+  const signature = req.headers['x-webhook-signature'];
+  const payload = JSON.stringify(req.body);
+  
+  // Validar firma del webhook
+  if (!verifyWebhookSignature(payload, signature)) {
+    return res.status(400).json({ error: 'Invalid webhook signature' });
+  }
+  
+  next();
+};
+                </div>
+            </div>
+
+            <div class="spec-section">
+                <div class="spec-title"><i class="fas fa-cogs"></i>Stack Tecnológico Recomendado</div>
+                <div class="code-section" data-language="YAML">Backend:
+- Node.js + Express.js / Python + FastAPI / PHP + Laravel
+- PostgreSQL (base de datos principal)
+- Redis (cache y sesiones)
+- JWT para autenticación
+- Helmet.js para seguridad HTTP
+- Rate limiting con express-rate-limit
+
+Frontend:
+- React.js + TypeScript / Vue.js / Angular
+- Tailwind CSS para estilos
+- Axios para peticiones HTTP
+- React Hook Form para formularios
+
+Infraestructura:
+- Docker + Docker Compose
+- Nginx (proxy reverso)
+- SSL/TLS (Let's Encrypt)
+- Monitoreo con Prometheus + Grafana
+- Logs con ELK Stack
+
+Pagos:
+- SDK oficial de Transbank
+- Webhooks para notificaciones
+- Retry logic para fallos de red
+- Logs detallados de transacciones
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB: SEGURIDAD -->
+        <div id="security" class="tab-content">
+            <div class="tab-header">
+                <h2><i class="fas fa-shield-alt"></i>Especificaciones de Seguridad</h2>
+            </div>
+
+            <div class="spec-section">
+                <div class="spec-title"><i class="fas fa-lock"></i>Cifrado y Almacenamiento Seguro</div>
+                <div class="code-section" data-language="JS">// Configuración de cifrado
+const ENCRYPTION_CONFIG = {
+  algorithm: 'aes-256-gcm',
+  keyLength: 32,
+  ivLength: 16,
+  tagLength: 16
+};
+
+// Cifrado de credenciales de pago
+const encryptCredentials = (data) => {
+  const key = crypto.scryptSync(process.env.MASTER_KEY, 'salt', 32);
+  const iv = crypto.randomBytes(16);
+  const cipher = crypto.createCipher(ENCRYPTION_CONFIG.algorithm, key, iv);
+  
+  let encrypted = cipher.update(JSON.stringify(data), 'utf8', 'hex');
+  encrypted += cipher.final('hex');
+  
+  const authTag = cipher.getAuthTag();
+  
+  return {
+    encrypted,
+    iv: iv.toString('hex'),
+    authTag: authTag.toString('hex')
+  };
+};
+
+// Variables de entorno requeridas
+MASTER_KEY=tu_clave_maestra_super_segura_256_bits
+DB_ENCRYPTION_KEY=clave_para_cifrar_datos_db
+JWT_SECRET=secret_para_tokens_jwt
+WEBHOOK_SECRET=secret_para_validar_webhooks
+                </div>
+            </div>
+
+            <div class="spec-section">
+                <div class="spec-title"><i class="fas fa-user-shield"></i>Autenticación y Autorización</div>
+                <div class="code-section" data-language="JS">// Sistema de permisos por negocio
+const permissions = {
+  'business:read': 'Ver datos del negocio',
+  'business:write': 'Modificar datos del negocio', 
+  'payments:configure': 'Configurar métodos de pago',
+  'payments:process': 'Procesar pagos',
+  'transactions:read': 'Ver transacciones',
+  'analytics:read': 'Ver reportes y analytics'
+};
+
+// Middleware de autorización
+const authorize = (permission) => {
+  return (req, res, next) => {
+    const userPermissions = req.user.permissions;
+    const businessId = req.params.businessId;
+    
+    // Verificar que el usuario tiene el permiso
+    if (!userPermissions.includes(permission)) {
+      return res.status(403).json({ error: 'Insufficient permissions' });
+    }
+    
+    // Verificar que el usuario pertenece al negocio
+    if (req.user.businessId !== businessId && !req.user.isPlatformAdmin) {
+      return res.status(403).json({ error: 'Access denied' });
+    }
+    
+    next();
+  };
+};
+
+// Uso en rutas
+router.get('/businesses/:businessId/transactions', 
+  authenticate,
+  authorize('transactions:read'),
+  getTransactions
+);
+                </div>
+            </div>
+
+            <div class="spec-section">
+                <div class="spec-title"><i class="fas fa-bug"></i>Validaciones y Sanitización</div>
+                <div class="code-section" data-language="JS">// Validación de entrada con Joi
+const businessSchema = Joi.object({
+  name: Joi.string().min(2).max(100).required(),
+  email: Joi.string().email().required(),
+  rut: Joi.string().pattern(/^\d{1,2}\.\d{3}\.\d{3}-[\dk]$/i).required(),
+  phone: Joi.string().pattern(/^\+?[1-9]\d{1,14}$/).optional(),
+  commission_rate: Joi.number().min(0).max(100).default(0)
+});
+
+// Sanitización de datos
+const sanitizeInput = (data) => {
+  if (typeof data === 'string') {
+    return DOMPurify.sanitize(data.trim());
+  }
+  
+  if (typeof data === 'object' && data !== null) {
+    const sanitized = {};
+    for (const [key, value] of Object.entries(data)) {
+      sanitized[key] = sanitizeInput(value);
+    }
+    return sanitized;
+  }
+  
+  return data;
+};
+
+// Rate limiting específico por negocio
+const businessRateLimit = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutos
+  max: (req) => {
+    // Límites diferentes según el tipo de operación
+    if (req.path.includes('/payments/')) return 10; // Max 10 pagos por 15 min
+    if (req.path.includes('/analytics/')) return 100; // Max 100 consultas
+    return 50; // Límite general
+  },
+  keyGenerator: (req) => `${req.ip}:${req.businessId}`,
+  message: 'Demasiadas solicitudes desde este negocio'
+});
+                </div>
+            </div>
+
+            <div class="spec-section">
+                <div class="spec-title"><i class="fas fa-clipboard-check"></i>Checklist de Seguridad</div>
+                <div style="padding: 1.5rem; background: var(--bg-primary); border-radius: var(--radius-md); border: 2px solid var(--border-light);">
+                    <h4 style="color: var(--success-color); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-check-circle"></i> Implementaciones Obligatorias:
+                    </h4>
+                    <ul style="margin: 0 0 1.5rem 1.5rem; line-height: 1.8; color: var(--text-primary);">
+                        <li>Cifrado AES-256 para credenciales de pago</li>
+                        <li>HTTPS en todas las comunicaciones</li>
+                        <li>Validación y sanitización de inputs</li>
+                        <li>Rate limiting por IP y negocio</li>
+                        <li>Logs de auditoría completos</li>
+                        <li>Autenticación JWT con refresh tokens</li>
+                        <li>Separación de credenciales por negocio</li>
+                        <li>Webhooks firmados criptográficamente</li>
+                        <li>Validación de montos y transacciones</li>
+                        <li>Timeouts en todas las operaciones</li>
+                    </ul>
+
+                    <h4 style="color: var(--warning-color); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-eye"></i> Monitoreo y Alertas:
+                    </h4>
+                    <ul style="margin: 0 0 1.5rem 1.5rem; line-height: 1.8; color: var(--text-primary);">
+                        <li>Alertas por transacciones fallidas repetitivas</li>
+                        <li>Monitoreo de intentos de acceso no autorizado</li>
+                        <li>Detección de patrones sospechosos de pago</li>
+                        <li>Alertas por cambios en configuraciones críticas</li>
+                        <li>Monitoreo de disponibilidad de servicios de pago</li>
+                        <li>Logs de todas las operaciones sensibles</li>
+                    </ul>
+
+                    <h4 style="color: var(--primary-color); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                        <i class="fas fa-balance-scale"></i> Cumplimiento Regulatorio:
+                    </h4>
+                    <ul style="margin: 0 0 0 1.5rem; line-height: 1.8; color: var(--text-primary);">
+                        <li>Cumplimiento PCI DSS para manejo de tarjetas</li>
+                        <li>Retención de logs por tiempo regulatorio</li>
+                        <li>Políticas de privacidad y GDPR</li>
+                        <li>Auditorías periódicas de seguridad</li>
+                        <li>Backup cifrado de datos críticos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading" id="loading">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <p>Procesando...</p>
+        </div>
+    </div>
+
+    <script>
+        // Estado global de la aplicación
+        let businesses = [];
+        let paymentConfigs = {};
+        let currentUser = {
+            id: 'admin',
+            role: 'platform_admin',
+            permissions: ['all']
+        };
+
+        // Datos de ejemplo
+        const sampleBusinesses = [
+            {
+                id: 'bus-001',
+                name: 'Restaurante El Buen Sabor',
+                email: 'contacto@buensabor.cl',
+                rut: '76.123.456-7',
+                phone: '+56 9 8765 4321',
+                address: 'Av. Providencia 1234, Santiago',
+                category: 'restaurant',
+                commission: 2.5,
+                status: 'active',
+                createdAt: '2024-01-15'
+            },
+            {
+                id: 'bus-002',
+                name: 'Tienda Digital Tech',
+                email: 'ventas@digitaltech.cl',
+                rut: '78.987.654-3',
+                phone: '+56 2 2345 6789',
+                address: 'Las Condes 5678, Santiago',
+                category: 'digital',
+                commission: 3.0,
+                status: 'active',
+                createdAt: '2024-02-20'
+            }
+        ];
+
+        // Inicializar datos de ejemplo
+        businesses = [...sampleBusinesses];
+
+        // Funciones de navegación
+        function showTab(tabName) {
+            // Ocultar todos los tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            const navTabs = document.querySelectorAll('.nav-tab');
+            navTabs.forEach(tab => tab.classList.remove('active'));
+
+            // Mostrar tab seleccionado
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+
+            // Cargar datos específicos del tab
+            if (tabName === 'businesses') {
+                renderBusinesses();
+                updateStats();
+            } else if (tabName === 'payments') {
+                loadBusinessOptions('paymentBusinessSelect');
+            } else if (tabName === 'checkout') {
+                loadBusinessOptions('checkoutBusinessSelect');
+            }
+        }
+
+        // Funciones de gestión de negocios
+        function addBusiness() {
+            const name = document.getElementById('businessName').value.trim();
+            const email = document.getElementById('businessEmail').value.trim();
+            const rut = document.getElementById('businessRUT').value.trim();
+            const phone = document.getElementById('businessPhone').value.trim();
+            const address = document.getElementById('businessAddress').value.trim();
+            const category = document.getElementById('businessCategory').value;
+            const commission = parseFloat(document.getElementById('businessCommission').value) || 0;
+
+            // Validaciones
+            if (!name || !email || !rut) {
+                showAlert('businessAlert', 'error', 'Por favor completa los campos obligatorios: Nombre, Email y RUT');
+                return;
+            }
+
+            if (!validateEmail(email)) {
+                showAlert('businessAlert', 'error', 'El email no tiene un formato válido');
+                return;
+            }
+
+            if (!validateRUT(rut)) {
+                showAlert('businessAlert', 'error', 'El RUT no tiene un formato válido (XX.XXX.XXX-X)');
+                return;
+            }
+
+            // Verificar duplicados
+            if (businesses.some(b => b.email === email || b.rut === rut)) {
+                showAlert('businessAlert', 'error', 'Ya existe un negocio con ese email o RUT');
+                return;
+            }
+
+            // Crear nuevo negocio
+            const newBusiness = {
+                id: 'bus-' + Date.now(),
+                name,
+                email,
+                rut,
+                phone,
+                address,
+                category,
+                commission,
+                status: 'active',
+                createdAt: new Date().toISOString().split('T')[0]
+            };
+
+            businesses.push(newBusiness);
+            
+            // Limpiar formulario
+            clearBusinessForm();
+            
+            // Mostrar éxito
+            showAlert('businessAlert', 'success', `Negocio "${name}" agregado exitosamente`);
+            
+            // Actualizar vista
+            renderBusinesses();
+            updateStats();
+
+            // Simular llamada a API
+            simulateApiCall('POST', '/api/v1/businesses', newBusiness);
+        }
+
+        function clearBusinessForm() {
+            document.getElementById('businessName').value = '';
+            document.getElementById('businessEmail').value = '';
+            document.getElementById('businessRUT').value = '';
+            document.getElementById('businessPhone').value = '';
+            document.getElementById('businessAddress').value = '';
+            document.getElementById('businessCategory').value = '';
+            document.getElementById('businessCommission').value = '';
+        }
+
+        function deleteBusiness(businessId) {
+            if (!confirm('¿Estás seguro de eliminar este negocio? Esta acción no se puede deshacer.')) {
+                return;
+            }
+
+            const index = businesses.findIndex(b => b.id === businessId);
+            if (index !== -1) {
+                const businessName = businesses[index].name;
+                businesses.splice(index, 1);
+                
+                // Eliminar configuración de pagos asociada
+                delete paymentConfigs[businessId];
+                
+                showAlert('businessAlert', 'success', `Negocio "${businessName}" eliminado exitosamente`);
+                renderBusinesses();
+                updateStats();
+
+                // Simular llamada a API
+                simulateApiCall('DELETE', `/api/v1/businesses/${businessId}`);
+            }
+        }
+
+        function toggleBusinessStatus(businessId) {
+            const business = businesses.find(b => b.id === businessId);
+            if (business) {
+                business.status = business.status === 'active' ? 'inactive' : 'active';
+                renderBusinesses();
+                updateStats();
+                
+                showAlert('businessAlert', 'success', 
+                    `Negocio ${business.status === 'active' ? 'activado' : 'desactivado'} exitosamente`);
+
+                // Simular llamada a API
+                simulateApiCall('PUT', `/api/v1/businesses/${businessId}`, { status: business.status });
+            }
+        }
+
+        function renderBusinesses() {
+            const container = document.getElementById('businessesList');
+            
+            if (businesses.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-store-slash"></i>
+                        <h3>No hay negocios registrados</h3>
+                        <p>Comienza agregando tu primer negocio</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = businesses.map(business => `
+                <div class="business-card fade-in">
+                    <div class="business-header">
+                        <div class="business-name">
+                            <i class="fas fa-store"></i>
+                            ${business.name}
+                        </div>
+                        <div class="business-status ${business.status === 'active' ? 'status-active' : 'status-inactive'}">
+                            ${business.status === 'active' ? 'ACTIVO' : 'INACTIVO'}
+                        </div>
+                    </div>
+                    
+                    <div class="business-info">
+                        <div class="info-item">
+                            <div class="info-label">Email</div>
+                            <div class="info-value">${business.email}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">RUT</div>
+                            <div class="info-value">${business.rut}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Categoría</div>
+                            <div class="info-value">${getCategoryName(business.category)}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Comisión</div>
+                            <div class="info-value">${business.commission}%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="business-actions">
+                        <button class="btn ${business.status === 'active' ? 'btn-warning' : 'btn-success'}" onclick="toggleBusinessStatus('${business.id}')">
+                            <i class="fas fa-${business.status === 'active' ? 'pause' : 'play'}"></i>
+                            ${business.status === 'active' ? 'Desactivar' : 'Activar'}
+                        </button>
+                        <button class="btn btn-danger" onclick="deleteBusiness('${business.id}')">
+                            <i class="fas fa-trash"></i>
+                            Eliminar
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateStats() {
+            const activeBusinesses = businesses.filter(b => b.status === 'active').length;
+            document.getElementById('totalBusinesses').textContent = activeBusinesses;
+        }
+
+        // Funciones de configuración de pagos
+        function loadBusinessOptions(selectId) {
+            const select = document.getElementById(selectId);
+            select.innerHTML = '<option value="">Seleccionar negocio...</option>';
+            
+            const activeBusinesses = businesses.filter(b => b.status === 'active');
+            activeBusinesses.forEach(business => {
+                const option = document.createElement('option');
+                option.value = business.id;
+                option.textContent = business.name;
+                select.appendChild(option);
+            });
+        }
+
+        function loadPaymentConfig() {
+            const businessId = document.getElementById('paymentBusinessSelect').value;
+            const form = document.getElementById('paymentConfigForm');
+            
+            if (!businessId) {
+                form.style.display = 'none';
+                return;
+            }
+
+            form.style.display = 'block';
+            form.classList.add('slide-up');
+            
+            // Cargar configuración existente si existe
+            const config = paymentConfigs[businessId];
+            if (config) {
+                document.getElementById('commerceCode').value = config.commerceCode || '';
+                document.getElementById('environment').value = config.environment || 'integration';
+                document.getElementById('returnUrl').value = config.returnUrl || '';
+                // No cargar las claves por seguridad en el frontend
+            } else {
+                // Limpiar formulario
+                document.getElementById('commerceCode').value = '';
+                document.getElementById('environment').value = 'integration';
+                document.getElementById('privateKey').value = '';
+                document.getElementById('publicCert').value = '';
+                document.getElementById('returnUrl').value = '';
+            }
+        }
+
+        function savePaymentConfig() {
+            const businessId = document.getElementById('paymentBusinessSelect').value;
+            const commerceCode = document.getElementById('commerceCode').value.trim();
+            const environment = document.getElementById('environment').value;
+            const privateKey = document.getElementById('privateKey').value.trim();
+            const publicCert = document.getElementById('publicCert').value.trim();
+            const returnUrl = document.getElementById('returnUrl').value.trim();
+
+            if (!businessId || !commerceCode || !privateKey || !publicCert) {
+                showAlert('paymentAlert', 'error', 'Por favor completa todos los campos obligatorios');
+                return;
+            }
+
+            if (!validateUrl(returnUrl)) {
+                showAlert('paymentAlert', 'error', 'La URL de retorno no es válida');
+                return;
+            }
+
+            // Guardar configuración (en producción, las claves se cifrarían)
+            paymentConfigs[businessId] = {
+                commerceCode,
+                environment,
+                privateKey: '[CIFRADO]', // Solo para demo
+                publicCert: '[CIFRADO]',  // Solo para demo
+                returnUrl,
+                isActive: true,
+                updatedAt: new Date().toISOString()
+            };
+
+            showAlert('paymentAlert', 'success', 'Configuración de pagos guardada exitosamente');
+
+            // Simular llamada a API
+            simulateApiCall('POST', `/api/v1/businesses/${businessId}/payment-config`, {
+                commerceCode,
+                environment,
+                returnUrl
+                // Las claves no se envían al log por seguridad
+            });
+        }
+
+        function testPaymentConfig() {
+            const businessId = document.getElementById('paymentBusinessSelect').value;
+            
+            if (!businessId || !paymentConfigs[businessId]) {
+                showAlert('paymentAlert', 'error', 'Primero debes guardar la configuración');
+                return;
+            }
+
+            showLoading(true);
+            
+            // Simular test de conexión
+            setTimeout(() => {
+                showLoading(false);
+                const success = Math.random() > 0.2; // 80% de éxito simulado
+                
+                if (success) {
+                    showAlert('paymentAlert', 'success', 'Conexión exitosa con Webpay Plus');
+                } else {
+                    showAlert('paymentAlert', 'error', 'Error de conexión. Verifica tus credenciales');
+                }
+
+                // Simular llamada a API
+                simulateApiCall('POST', `/api/v1/businesses/${businessId}/test-connection`);
+            }, 2000);
+        }
+
+        // Funciones de checkout demo
+        function initiatePayment() {
+            const businessId = document.getElementById('checkoutBusinessSelect').value;
+            const productName = document.getElementById('productName').value.trim();
+            const amount = parseFloat(document.getElementById('amount').value);
+            const customerEmail = document.getElementById('customerEmail').value.trim();
+
+            if (!businessId || !productName || !amount || !customerEmail) {
+                showAlert('checkoutAlert', 'error', 'Por favor completa todos los campos');
+                return;
+            }
+
+            if (amount < 100) {
+                showAlert('checkoutAlert', 'error', 'El monto mínimo es $100 CLP');
+                return;
+            }
+
+            if (!validateEmail(customerEmail)) {
+                showAlert('checkoutAlert', 'error', 'El email del cliente no es válido');
+                return;
+            }
+
+            const business = businesses.find(b => b.id === businessId);
+            const paymentConfig = paymentConfigs[businessId];
+
+            if (!business) {
+                showAlert('checkoutAlert', 'error', 'Negocio no encontrado');
+                return;
+            }
+
+            if (!paymentConfig) {
+                showAlert('checkoutAlert', 'error', 'El negocio no tiene configuración de pagos');
+                return;
+            }
+
+            showLoading(true);
+
+            // Simular proceso de pago
+            const transactionId = 'TXN-' + Date.now();
+            const sessionId = 'SES-' + Math.random().toString(36).substr(2, 9);
+            
+            setTimeout(() => {
+                showLoading(false);
+                
+                // Calcular comisión
+                const commission = amount * (business.commission / 100);
+                const netAmount = amount - commission;
+
+                // Simular respuesta de Webpay
+                const paymentResult = {
+                    transactionId,
+                    sessionId,
+                    status: 'approved',
+                    amount,
+                    commission,
+                    netAmount,
+                    authorizationCode: 'AUTH-' + Math.random().toString(36).substr(2, 6).toUpperCase(),
+                    paymentType: 'VD',
+                    business: business.name,
+                    timestamp: new Date().toISOString()
+                };
+
+                displayPaymentResult(paymentResult);
+                showAlert('checkoutAlert', 'success', 'Pago procesado exitosamente');
+
+                // Simular llamada a API
+                simulateApiCall('POST', '/api/v1/payments/initiate', {
+                    business_id: businessId,
+                    amount,
+                    product_description: productName,
+                    customer_email: customerEmail
+                });
+            }, 3000);
+        }
+
+        function displayPaymentResult(result) {
+            const container = document.getElementById('paymentResult');
+            container.innerHTML = `
+                <div class="slide-up" style="background: linear-gradient(135deg, #ecfdf5, #d1fae5); border: 2px solid var(--success-color); border-radius: var(--radius-lg); padding: 2rem; margin-top: 2rem;">
+                    <h3 style="color: var(--success-color); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem;">
+                        <i class="fas fa-check-circle"></i>
+                        Pago Exitoso
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                        <div class="info-item">
+                            <div class="info-label">ID Transacción</div>
+                            <div class="info-value">${result.transactionId}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Código Autorización</div>
+                            <div class="info-value">${result.authorizationCode}</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Monto Total</div>
+                            <div class="info-value">$${result.amount.toLocaleString()} CLP</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Comisión Plataforma</div>
+                            <div class="info-value">$${result.commission.toLocaleString()} CLP</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Monto Neto al Comercio</div>
+                            <div class="info-value">$${result.netAmount.toLocaleString()} CLP</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Negocio</div>
+                            <div class="info-value">${result.business}</div>
+                        </div>
+                    </div>
+                    <div class="alert alert-info" style="margin-top: 1.5rem;">
+                        <i class="fas fa-info-circle"></i>
+                        Los fondos van directamente a la cuenta del negocio configurada en Webpay Plus
+                    </div>
+                </div>
+            `;
+        }
+
+        // Funciones de utilidad
+        function showAlert(containerId, type, message) {
+            const container = document.getElementById(containerId);
+            const iconMap = {
+                'success': 'fas fa-check-circle',
+                'error': 'fas fa-exclamation-circle',
+                'warning': 'fas fa-exclamation-triangle',
+                'info': 'fas fa-info-circle'
+            };
+            
+            container.innerHTML = `
+                <div class="alert alert-${type} slide-up">
+                    <i class="${iconMap[type]}"></i>
+                    ${message}
+                </div>
+            `;
+            
+            // Auto-ocultar después de 5 segundos
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+
+        function showLoading(show) {
+            document.getElementById('loading').style.display = show ? 'block' : 'none';
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validateRUT(rut) {
+            const re = /^\d{1,2}\.\d{3}\.\d{3}-[\dk]$/i;
+            return re.test(rut);
+        }
+
+        function validateUrl(url) {
+            try {
+                new URL(url);
+                return true;
+            } catch {
+                return false;
+            }
+        }
+
+        function getCategoryName(category) {
+            const categories = {
+                'retail': 'Retail',
+                'restaurant': 'Restaurante',
+                'services': 'Servicios',
+                'digital': 'Digital',
+                'other': 'Otro'
+            };
+            return categories[category] || 'No especificado';
+        }
+
+        function simulateApiCall(method, endpoint, data = null) {
+            console.log(`🔄 API Call: ${method} ${endpoint}`);
+            if (data) {
+                console.log('📤 Data:', data);
+            }
+            console.log('✅ API Response: OK');
+        }
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            renderBusinesses();
+            updateStats();
+        });
+    </script>
+</body>
+</html>

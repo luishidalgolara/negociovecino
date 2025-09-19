@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negocio Vecino - Tu directorio de tiendas de barrio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="portada-styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <div class="logo-text">
+                        <span class="logo-main">Negocio Vecino</span>
+                        <span class="logo-sub">Crea tu pedido en línea, Anota la hora de retiro y olvídate de las filas.</span>
+                    </div>
+                </a>
+                <div class="header-actions">
+                    <div class="location-indicator">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span id="currentLocation">Selecciona tu ubicación</span>
+                    </div>
+                    <a href="usuario-panel.html" class="btn-register">Registrarse</a>
+                    <button id="themeToggle" class="theme-toggle" title="Cambiar tema">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">Tú Negocio Vecino, compra fácil, retira rápido.</h1>
+                <p class="hero-subtitle">Compra en tu barrio y apoya a los negocios locales, elige tu barrio, elige crecer juntos. </p>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="totalStores">12</span>
+                        <span class="stat-label">Comunas Disponibles</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1</span>
+                        <span class="stat-label">Región</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Local</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Selector de Ubicación -->
+    <div class="container">
+        <div class="location-selector">
+            <div class="selector-header">
+                <h3>¿Dónde quieres comprar?</h3>
+                <p>Selecciona tu región y comuna para ver los negocios disponibles</p>
+            </div>
+            <form class="location-form" id="locationForm">
+                <div class="form-group">
+                    <label for="regionSelect">
+                        <i class="fas fa-globe-americas"></i>
+                        Región
+                    </label>
+                    <select id="regionSelect" class="form-control" required>
+                        <option value="">Región</option>
+                        <option value="biobio">Región del Biobío</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="comunaSelect">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Comuna
+                    </label>
+                    <select id="comunaSelect" class="form-control" required disabled>
+                        <option value="">Comuna</option>
+                    </select>
+                </div>
+            </form>
+            <button type="submit" class="btn-find-stores" id="findStoresBtn">
+                <i class="fas fa-search"></i>
+                <span>Buscar Negocios</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Filtros y Búsqueda -->
+    <div class="container">
+        <div class="search-filters" id="searchFilters" style="display: none;">
+            <div class="filters-header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar por nombre de negocio...">
+                </div>
+                <div class="view-controls">
+                    <button class="view-btn active" data-view="grid">
+                        <i class="fas fa-th-large"></i>
+                        <span>Tarjetas</span>
+                    </button>
+                    <button class="view-btn" data-view="list">
+                        <i class="fas fa-list"></i>
+                        <span>Lista</span>
+                    </button>
+                    <button class="view-btn" data-view="compact">
+                        <i class="fas fa-bars"></i>
+                        <span>Compacta</span>
+                    </button>
+                </div>
+            </div>
+            <div class="filter-tags">
+                <button class="filter-tag active" data-category="all">
+                    <i class="fas fa-th"></i>
+                    Todos
+                </button>
+                <button class="filter-tag" data-category="panaderia">
+                    <i class="fas fa-bread-slice"></i>
+                    Panadería
+                </button>
+                <button class="filter-tag" data-category="supermercado">
+                    <i class="fas fa-shopping-basket"></i>
+                    Supermercado
+                </button>
+                <button class="filter-tag" data-category="farmacia">
+                    <i class="fas fa-pills"></i>
+                    Farmacia
+                </button>
+                <button class="filter-tag" data-category="verduleria">
+                    <i class="fas fa-carrot"></i>
+                    Verdulería
+                </button>
+                <button class="filter-tag" data-category="carniceria">
+                    <i class="fas fa-drumstick-bite"></i>
+                    Carnicería
+                </button>
+                <button class="filter-tag" data-category="otros">
+                    <i class="fas fa-ellipsis-h"></i>
+                    Otros
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid de Negocios -->
+    <div class="container">
+        <section class="stores-section">
+            <h2 id="storesTitle">Negocios Disponibles</h2>
+            <div class="stores-grid" id="storesGrid">
+                <!-- Los negocios se cargan dinámicamente -->
+            </div>
+            
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <i class="fas fa-store-slash"></i>
+                <h3>No se encontraron negocios</h3>
+                <p>Intenta con otra ubicación o filtro diferente</p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Negocio Vecino. Conectando barrios, apoyando el comercio local.</p>
+                <div class="footer-links">
+                    <a href="#about">Acerca de</a>
+                    <a href="#contact">Contacto</a>
+                    <a href="#terms">Términos</a>
+                    <a href="#privacy">Privacidad</a>
+                    <a href="#join">Únete como negocio</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="portada-script.js"></script>
+</body>
+</html>
