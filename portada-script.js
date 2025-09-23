@@ -900,3 +900,36 @@ function loadTheme() {
 
 // ===== INICIALIZACIÓN =====
 document.addEventListener('DOMContentLoaded', initializeApp);
+// En la función setupEventListeners(), agregar:
+let lastScrollY = window.scrollY;
+let ticking = false;
+
+function updateHeader() {
+    const header = document.querySelector('.main-header');
+    
+    if (window.innerWidth <= 768) { // Solo en móvil
+        if (window.scrollY > lastScrollY && window.scrollY > 80) {
+            // Scrolling hacia abajo - ocultar cabecera
+            header.classList.add('hidden');
+        } else {
+            // Scrolling hacia arriba - mostrar cabecera
+            header.classList.remove('hidden');
+        }
+    } else {
+        // En desktop, siempre mostrar
+        header.classList.remove('hidden');
+    }
+    
+    lastScrollY = window.scrollY;
+    ticking = false;
+}
+
+function onScroll() {
+    if (!ticking) {
+        requestAnimationFrame(updateHeader);
+        ticking = true;
+    }
+}
+
+window.addEventListener('scroll', onScroll);
+window.addEventListener('resize', updateHeader);
