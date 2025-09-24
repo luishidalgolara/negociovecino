@@ -83,8 +83,7 @@ let negociosData = [
         imagen: "17CONCEOPHARMA.jpeg",
         tags: ["medicamentos", "salud", "atención personalizada"],
         destacado: true
-    },
-    
+    },    
     {
         id: 3,
         nombre: "LOS HIDALGOS Mini Market",
@@ -452,6 +451,70 @@ let negociosData = [
         reviews: 27,
         imagen: "11panaderialaguna.jpeg",
         tags: ["pan", "amasados", "repostería", "fresco"],
+        destacado: false
+    },
+        {
+        id: 5,
+        nombre: "Nafita",
+        descripcion: "Restaurante local con un ambiente acogedor, ideal para disfrutar comidas caseras y reuniones familiares.",
+        categoria: "restaurante",
+        comuna: "chiguayante",
+        direccion: "Los Aromos 598, 4111147 Chiguayante, Bío Bío",
+        telefono: "+56 9 0000 0000",
+        horario: "Lun-Sáb: 10:30-23:00, Dom: 10:30-15:00",
+        estado: "open",
+        rating: 4.6,
+        reviews: 78,
+        imagen: "31CHINAFITA.png",
+        tags: ["comida casera", "almuerzos", "cenas", "familiar"],
+        destacado: true
+    },
+    {
+        id: 2,
+        nombre: "Salón de Belleza Rossy",
+        descripcion: "Servicios de peluquería, estética y cuidado personal en un ambiente acogedor y profesional.",
+        categoria: "belleza",
+        comuna: "chiguayante",
+        direccion: "Av. Manuel Rodríguez 1898, 4110372 Chiguayante, Bío Bío",
+        telefono: "+56 9 0000 0000",
+        horario: "Lun-Sáb: 9:00-19:00",
+        estado: "open",
+        rating: 4.8,
+        reviews: 120,
+        imagen: "28CHISALONBELLEZAROSSY.png",
+        tags: ["peluquería", "manicure", "tratamientos faciales", "estética"],
+        destacado: true
+    },
+    {
+        id: 3,
+        nombre: "MEI",
+        descripcion: "Restaurante con cocina tradicional y toques contemporáneos, ideal para compartir en familia o con amigos.",
+        categoria: "restaurante",
+        comuna: "chiguayante",
+        direccion: "Av. O'Higgins 2362-2398, Chiguayante, Bío Bío",
+        telefono: "+56 41 236 0582",
+        horario: "Lun-Sáb: 9:00-20:30, Dom: 9:00-14:00",
+        estado: "open",
+        rating: 4.7,
+        reviews: 95,
+        imagen: "29CHIMEI.png",
+        tags: ["cocina chilena", "almuerzos", "cena familiar"],
+        destacado: true
+    },
+    {
+        id: 4,
+        nombre: "Minimarket Belén",
+        descripcion: "Almacén de barrio con variedad de productos de abarrotes, bebidas, snacks y artículos de uso diario.",
+        categoria: "minimarket",
+        comuna: "chiguayante",
+        direccion: "Central 2300-2386, Chiguayante, Bío Bío",
+        telefono: "+56 9 0000 0000",
+        horario: "Lun-Dom: 9:00-22:00",
+        estado: "open",
+        rating: 4.5,
+        reviews: 60,
+        imagen: "30CHIMINIBELEN.png",
+        tags: ["abarrotes", "snacks", "bebidas", "productos de diario"],
         destacado: false
     }
 
