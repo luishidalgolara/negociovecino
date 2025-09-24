@@ -37,36 +37,181 @@ let negociosData = [
         destacado: true
     },
     {
-        id: 2,
-        nombre: "Panadería Don Jesús",
-        descripcion: "Panadería tradicional con más de 30 años sirviendo a la comunidad. Pan fresco todos los días.",
+        id: 16,
+        nombre: "Antojo Andino",
+        descripcion: "Sabores andinos con preparaciones caseras y auténticas. Especialidad en masas y productos tradicionales.",
         categoria: "panaderia",
         comuna: "concepcion",
-        direccion: "Av. Libertador Bernardo O'Higgins 1234",
-        telefono: "+56 9 1234 5678",
-        horario: "Lun-Sáb: 6:00-20:00, Dom: 7:00-15:00",
+        direccion: "Hipólito Salas 570, Concepción, Chile",
+        telefono: "+56 9 0000 0000",
+        horario: "Lun-Vie: 8:00-19:00, Sáb: 9:00-16:00",
         estado: "open",
-        rating: 4.8,
-        reviews: 127,
-        imagen: null,
-        tags: ["pan artesanal", "empanadas", "tortas"],
+        rating: 4.6,
+        reviews: 89,
+        imagen: "14CONCEantojoandino.jpeg",
+        tags: ["pan andino", "empanadas", "dulces típicos"],
         destacado: true
     },
     {
+        id: 17,
+        nombre: "Tasty Market",
+        descripcion: "Mercado local con productos frescos y preparados. Variedad en panadería, repostería y abarrotes.",
+        categoria: "panaderia",
+        comuna: "concepcion",
+        direccion: "Barros Arana 255, 4030626 Concepción, Bío Bío",
+        telefono: "+56 9 0000 0000",
+        horario: "Lun-Vie: 8:00-19:00, Sáb: 9:00-16:00",
+        estado: "open",
+        rating: 4.7,
+        reviews: 54,
+        imagen: "15CONCETASTYMK.jpeg",
+        tags: ["pan fresco", "productos locales", "repostería"],
+        destacado: true
+    },
+    {
+        id: 2,
+        nombre: "Farmacia SetopPharma",
+        descripcion: "Farmacia local que ofrece medicamentos, productos de salud y atención personalizada.",
+        categoria: "farmacia",
+        comuna: "concepcion",
+        direccion: "Barros Arana 289, 4030000 Concepción, Bío Bío",
+        telefono: "(41) 252 2270",
+        horario: "Lun-Jue: 9:00-18:30, Vie: 9:00-17:30, Sáb-Dom: Cerrado",
+        estado: "open",
+        rating: 4.4,
+        reviews: 38,
+        imagen: "17CONCEOPHARMA.jpeg",
+        tags: ["medicamentos", "salud", "atención personalizada"],
+        destacado: true
+    },
+    
+    {
         id: 3,
-        nombre: "Supermercado Familia",
-        descripcion: "Todo lo que necesitas para tu hogar. Productos frescos y precios justos.",
+        nombre: "LOS HIDALGOS Mini Market",
+        descripcion: "Mini market con productos de primera necesidad, abarrotes y snacks.",
         categoria: "supermercado",
         comuna: "concepcion",
-        direccion: "Calle Maipú 567",
-        telefono: "+56 9 2345 6789",
-        horario: "Lun-Dom: 8:00-22:00",
+        direccion: "Angol 452, 4070169 Concepción, Bío Bío",
+        telefono: "+56 9 0000 0000",
+        horario: "Lun-Dom: 8:00-21:00",
+        estado: "open",
+        rating: 4.3,
+        reviews: 22,
+        imagen: "18CONCEHIDALGOS.jpeg",
+        tags: ["abarrotes", "snacks", "productos frescos"],
+        destacado: true
+    },
+    {
+        id: 14,
+        nombre: "FARMACIA MAICAO",
+        descripcion: "Farmacia que ofrece medicamentos, productos de cuidado personal y atención personalizada.",
+        categoria: "farmacia",
+        comuna: "concepcion",
+        direccion: "Barros Arana 419, 4030613 Concepción, Bío Bío",
+        telefono: "+56 9 0000 0000",
+        horario: "Lun-Mar: 9:30-19:00, Mié-Vie: 9:30-19:00, Sáb: 10:00-15:00, Dom: Cerrado",
+        estado: "open",
+        rating: 4.4,
+        reviews: 41,
+        imagen: "25CONCEFARMACIAMAICAO.jpeg",
+        tags: ["medicamentos", "cuidado personal", "farmacia"],
+        destacado: true
+    },
+    {
+    id: 15,
+        nombre: "JJ CELL CONCEPCIÓN",
+        descripcion: "Tienda especializada en venta y reparación de celulares, accesorios y tecnología móvil.",
+        categoria: "tecnología",
+        comuna: "concepcion",
+        direccion: "Con carreras - Colo Colo 805, 4030000 Concepción, Bío Bío",
+        telefono: "9 3126 6600",
+        horario: "Lun-Mar: 10:00-20:00, Mié-Vie: 10:00-20:00, Sáb: 10:00-18:00, Dom: Cerrado",
         estado: "open",
         rating: 4.5,
-        reviews: 203,
-        imagen: null,
-        tags: ["abarrotes", "lacteos", "carnes", "verduras"],
-        destacado: false
+        reviews: 37,
+        imagen: "26CONCESERVICIOTECNICO.jpeg",
+        tags: ["celulares", "accesorios", "reparación de móviles"],
+        destacado: true
+    },
+    {
+       id: 16,
+       nombre: "FARMACIA CRUZ VERDE",
+       descripcion: "Farmacia con amplia variedad de medicamentos, productos de cuidado personal y atención profesional.",
+       categoria: "farmacia",
+       comuna: "concepcion",
+       direccion: "Barros Arana 472, 1111845 Concepción, Bío Bío",
+       telefono: "+56 9 0000 0000",
+       horario: "Lun-Mar: 9:00-19:00, Mié-Sáb: 9:00-19:00, Dom: Cerrado",
+       estado: "open",
+       rating: 4.5,
+       reviews: 58,
+       imagen: "27CONCEFARMACIACRUZVERDE.jpeg",
+       tags: ["medicamentos", "cuidado personal", "farmacia"],
+       destacado: true
+    },
+    {
+        id: 10,
+        nombre: "NEW PLANET FAST FOOD",
+        descripcion: "Comida rápida con variedad de hamburguesas, sándwiches y snacks, ubicada en Concepción.",
+        categoria: "comida rápida",
+        comuna: "concepcion",
+        direccion: "Lincoyan 440, Concepción",
+        telefono: "+56 9 0000 0000",
+        horario: "Lun-Dom: 10:00-18:00",
+        estado: "open",
+        rating: 4.4,
+        reviews: 28,
+        imagen: "21CONCENEWPLANET.jpeg",
+        tags: ["comida rápida", "hamburguesas", "sándwiches", "snacks"],
+        destacado: true
+    },
+    {
+        id: 11,
+        nombre: "Raíz Carnicería Congelados",
+        descripcion: "Carnicería especializada en cortes frescos y productos congelados de calidad.",
+        categoria: "carnicería",
+        comuna: "concepcion",
+        direccion: "Av. Los Carrera 670, 4030498 Concepción, Bío Bío",
+        telefono: "+56 9 0000 0000",
+        horario: "Lun-Dom: 8:00-20:00",
+        estado: "open",
+        rating: 4.5,
+        reviews: 40,
+        imagen: "22CONCECARNICERIARAIZ.jpeg",
+        tags: ["cortes frescos", "productos congelados", "carnicería"],
+        destacado: true
+    },
+    {
+        id: 12,
+        nombre: "LOS PAISAS",
+        descripcion: "Local de comida con variedad de platos típicos, ofreciendo sabor y tradición en Concepción.",
+        categoria: "comida rápida",
+        comuna: "concepcion",
+        direccion: "Castellón 805, Concepción",
+        telefono: "+56 9 0000 0000",
+        horario: "Lun-Dom: 10:00-22:00",
+        estado: "open",
+        rating: 4.4,
+        reviews: 35,
+        imagen: "23CONCELOSPAISAS.jpeg",
+        tags: ["comida rápida", "platos típicos", "sabor local"],
+        destacado: true
+    },
+    {
+    id: 13,
+        nombre: "FERRETERÍA JAZMÍN",
+        descripcion: "Ferretería con amplia variedad de herramientas, materiales y productos para el hogar.",
+        categoria: "ferretería",
+        comuna: "concepcion",
+        direccion: "Av. Los Carrera 777, 4030000 Concepción, Bío Bío",
+        telefono: "9 7721 8658",
+        horario: "Lun-Mar: 10:00-19:00, Mié-Vie: 10:00-19:00, Sáb: 10:00-15:00, Dom: Cerrado",
+        estado: "open",
+        rating: 4.5,
+        reviews: 52,
+        imagen: "24CONCEFERRETERIAJAZMIN.jpeg",
+        tags: ["herramientas", "materiales", "ferretería"],
+        destacado: true
     },
     {
         id: 4,
@@ -102,18 +247,34 @@ let negociosData = [
     },
     {
         id: 6,
-        nombre: "Verdulería El Huerto",
-        descripcion: "Frutas y verduras frescas directo del campo. Calidad garantizada.",
-        categoria: "verduleria",
+        nombre: "EMPORIO AGRÍCOLA BOTILLERÍA",
+        descripcion: "Botillería y emporio con gran variedad de bebidas, productos agrícolas y alimentos.",
+        categoria: "supermercado",
         comuna: "concepcion",
-        direccion: "Calle Angol 123",
-        telefono: "+56 9 4567 8901",
-        horario: "Lun-Sáb: 7:00-19:00",
+        direccion: "Libertador Gral. Bernardo O'Higgins 302, 4030000 Concepción, Bío Bío",
+        telefono: "9 8987 8105",
+        horario: "Lun-Dom: 7:00-3:00",
+        estado: "open",
+        rating: 4.5,
+        reviews: 46,
+        imagen: "19CONCEEMPORIOAGRICOLA.jpeg",
+        tags: ["bebidas", "alimentos", "productos agrícolas"],
+        destacado: true
+    },
+    {
+        id: 9,
+        nombre: "DORI LOCURA",
+        descripcion: "Comida rápida estilo mexicano: quesadillas, tacos, flautas y más, servido desde carrito en Concepción.",
+        categoria: "comida rápida",
+        comuna: "concepcion",
+        direccion: "Concepción (Carrito Móvil)",
+        telefono: "+56 9 0000 0000",
+        horario: "Lun-Dom: 11:00-22:00",
         estado: "open",
         rating: 4.6,
-        reviews: 156,
-        imagen: null,
-        tags: ["frutas", "verduras", "orgánico"],
+        reviews: 31,
+        imagen: "20CONCEDORYLOCURA.jpeg",
+        tags: ["comida rápida", "mexicana", "quesadillas", "tacos", "flautas"],
         destacado: true
     },
     {
@@ -164,6 +325,23 @@ let negociosData = [
         tags: ["restaurante", "comida rápida", "pizzas", "familiar"],
         destacado: true
     },
+    {
+        id: 17,
+        nombre: "Sultan Market",
+        descripcion: "Mercado de especialidades con productos frescos y sabores internacionales.",
+        categoria: "panaderia",
+        comuna: "concepcion",
+        direccion: "Barros Arana 288, 4030000 Concepción, Bío Bío",
+        telefono: "+56 9 0000 0000",
+        horario: "Lun-Mar: 8:00-21:00, Mié-Vie: 8:00-21:00, Sáb: 9:00-20:30, Dom: 11:00-20:00",
+        estado: "open",
+        rating: 4.5,
+        reviews: 73,
+        imagen: "16CONCESULTAN.jpeg",
+        tags: ["productos internacionales", "mercado local", "panadería"],
+        destacado: false
+    },
+
     {
         id: 8,
         nombre: "Ferretería Ferremed",
@@ -900,3 +1078,36 @@ function loadTheme() {
 
 // ===== INICIALIZACIÓN =====
 document.addEventListener('DOMContentLoaded', initializeApp);
+// En la función setupEventListeners(), agregar:
+let lastScrollY = window.scrollY;
+let ticking = false;
+
+function updateHeader() {
+    const header = document.querySelector('.main-header');
+    
+    if (window.innerWidth <= 768) { // Solo en móvil
+        if (window.scrollY > lastScrollY && window.scrollY > 80) {
+            // Scrolling hacia abajo - ocultar cabecera
+            header.classList.add('hidden');
+        } else {
+            // Scrolling hacia arriba - mostrar cabecera
+            header.classList.remove('hidden');
+        }
+    } else {
+        // En desktop, siempre mostrar
+        header.classList.remove('hidden');
+    }
+    
+    lastScrollY = window.scrollY;
+    ticking = false;
+}
+
+function onScroll() {
+    if (!ticking) {
+        requestAnimationFrame(updateHeader);
+        ticking = true;
+    }
+}
+
+window.addEventListener('scroll', onScroll);
+window.addEventListener('resize', updateHeader);
