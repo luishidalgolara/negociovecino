@@ -1110,4 +1110,10 @@ function onScroll() {
 }
 
 window.addEventListener('scroll', onScroll);
-window.addEventListener('resize', updateHeader);
+function miFuncionLocal() {
+    console.log("versión local");
+}
+function miFuncionRemota() {
+    console.log("versión remota");
+}
+
